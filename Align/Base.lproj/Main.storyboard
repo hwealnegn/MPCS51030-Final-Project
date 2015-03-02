@@ -24,7 +24,7 @@
                                         <rect key="frame" x="0.0" y="80" width="600" height="420"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactCell" rowHeight="80" id="UaI-dO-fz3">
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactCell" rowHeight="80" id="UaI-dO-fz3" customClass="ContactTableViewCell">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UaI-dO-fz3" id="tUA-fG-uXT">
@@ -50,6 +50,11 @@
                                                         </label>
                                                     </subviews>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="contactLocation" destination="ne9-OW-iq2" id="Zga-s2-fPV"/>
+                                                    <outlet property="contactName" destination="rYg-yo-mgq" id="s3w-cQ-0OP"/>
+                                                    <outlet property="contactTime" destination="870-zN-bFc" id="Ksh-i7-e8R"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
@@ -81,6 +86,10 @@
                             <constraint firstItem="Hz1-9q-ZA1" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="tXb-4f-FBo"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="selectContacts" destination="JMT-zJ-aEj" id="VnH-2Y-zGc"/>
+                        <outlet property="yourTime" destination="Zvj-h6-rIf" id="ben-Xj-us9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5520B03F-4BF3-4186-A3AC-F8D3B3F9CD15</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Align</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8813ACB35212235081A99681553526239AAB189A</key>
+		<string>https://github.com/uchicago-mobi/hwealnegn-MPCS51030-Winter-2015-Project</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Align.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8813ACB35212235081A99681553526239AAB189A</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/uchicago-mobi/hwealnegn-MPCS51030-Winter-2015-Project</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8813ACB35212235081A99681553526239AAB189A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8813ACB35212235081A99681553526239AAB189A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Align</string>
+		</dict>
+	</array>
+</dict>
+</plist>
