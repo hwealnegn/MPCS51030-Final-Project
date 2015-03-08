@@ -22,7 +22,6 @@
     [super viewDidLoad];
     self.contacts = [[NSMutableArray alloc] init];
     [self loadInitialData];
-    NSLog(@"Number of contacts: %lu", (unsigned long)[self.contacts count]);
     
     // Set your time as current time
     // Reference: http://stackoverflow.com/questions/8385132/get-current-time-on-the-iphone-in-a-chosen-format
@@ -41,15 +40,15 @@
     [self.contacts addObject:contact1];
     
     Contact *contact2 = [[Contact alloc] init];
-    contact1.name = @"Dad";
-    contact1.time = @"12:00";
-    contact1.location = @"China";
+    contact2.name = @"Dad";
+    contact2.time = @"12:00";
+    contact2.location = @"China";
     [self.contacts addObject:contact2];
     
     Contact *contact3 = [[Contact alloc] init];
-    contact1.name = @"Kevin";
-    contact1.time = @"11:00";
-    contact1.location = @"New York";
+    contact3.name = @"Kevin";
+    contact3.time = @"11:00";
+    contact3.location = @"New York";
     [self.contacts addObject:contact3];
 }
 
@@ -59,6 +58,7 @@
 }
 
 #pragma mark - Table View
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -71,10 +71,12 @@
     ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell" forIndexPath:indexPath];
     Contact *contact = [self.contacts objectAtIndex:indexPath.row];
     
-    // Configure cell here!
+    // Configure cell here! Weird issue...
     cell.contactName.text = contact.name;
     cell.contactTime.text = contact.time;
     cell.contactLocation.text = contact.location;
+    
+    NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
     
     return cell;
 }
