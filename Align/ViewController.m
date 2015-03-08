@@ -30,6 +30,8 @@
     [dateFormatter setDateFormat:@"hh:mm"];
      NSString *resultString = [dateFormatter stringFromDate: currentTime];
     self.yourTime.text = resultString;
+    
+    NSLog(@"FIRST VIEW DID LOAD");
 }
 
 - (void)loadInitialData {
