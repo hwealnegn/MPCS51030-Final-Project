@@ -73,7 +73,7 @@
     ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell" forIndexPath:indexPath];
     Contact *contact = [self.contacts objectAtIndex:indexPath.row];
     
-    // Configure cell here! Weird issue...
+    // Configure cell here!
     cell.contactName.text = contact.name;
     cell.contactTime.text = contact.time;
     cell.contactLocation.text = contact.location;

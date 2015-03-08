@@ -20,7 +20,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.contacts = [[NSMutableArray alloc] init];
     [self loadInitialData];
     
@@ -76,7 +75,7 @@
     
     Contact *contact = [self.contacts objectAtIndex:indexPath.row];
     
-    // Configure cell here! Weird issue...
+    // Configure cell here!
     cell.contactName.text = contact.name;
     cell.contactTime.text = contact.time;
     cell.contactLocation.text = contact.location;
