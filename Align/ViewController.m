@@ -20,22 +20,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
     self.contacts = [[NSMutableArray alloc] init];
     [self loadInitialData];
+    NSLog(@"Number of contacts: %lu", (unsigned long)[self.contacts count]);
+    
+    // Set your time as current time
+    // Reference: http://stackoverflow.com/questions/8385132/get-current-time-on-the-iphone-in-a-chosen-format
+    NSDate *currentTime = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"hh:mm"];
+     NSString *resultString = [dateFormatter stringFromDate: currentTime];
+    self.yourTime.text = resultString;
 }
 
 - (void)loadInitialData {
     Contact *contact1 = [[Contact alloc] init];
     contact1.name = @"Mom";
     contact1.time = @"12:00";
-    contact1.location = @"Taipei";
+    contact1.location = @"Taiwan";
     [self.contacts addObject:contact1];
     
     Contact *contact2 = [[Contact alloc] init];
     contact1.name = @"Dad";
     contact1.time = @"12:00";
-    contact1.location = @"Suzhou";
+    contact1.location = @"China";
     [self.contacts addObject:contact2];
     
     Contact *contact3 = [[Contact alloc] init];
