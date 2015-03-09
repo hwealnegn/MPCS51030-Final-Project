@@ -14,6 +14,8 @@
 
 @property NSMutableArray *contacts;
 
+@property(readonly) NSInteger secondsFromGMT;
+
 @end
 
 @implementation ViewController
@@ -32,25 +34,67 @@
     self.yourTime.text = resultString;
     
     NSLog(@"FIRST VIEW DID LOAD");
+    
+    /*NSArray *timeZoneNames = [NSTimeZone knownTimeZoneNames];
+    for (int i=0; i<[timeZoneNames count]; i++){
+        NSLog(@"%@", timeZoneNames[i]);
+    }*/
+    
+    NSLog(@"Time in Taipei: %@", [NSTimeZone timeZoneWithName:@"Asia/Taipei"]);
+    
+    // Example code from http://rypress.com/tutorials/objective-c/data-types/dates
+    NSTimeZone *centralStandardTime = [NSTimeZone timeZoneWithAbbreviation:@"CST"];
+    NSTimeZone *cairoTime = [NSTimeZone timeZoneWithName:@"Africa/Cairo"];
+    NSTimeZone *taipeiTime = [NSTimeZone timeZoneWithName:@"Asia/Taipei"];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    NSLocale *posix = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    
+    
+    [formatter setLocale:posix];
+    //[formatter setDateFormat:@"M.d.y h:mm a"];
+    [formatter setDateFormat:@"h a"];
+    NSString *dateString = @"8 PM";
+    //NSString *dateString = @"11.4.2012 8:09 PM";
+    
+    [formatter setTimeZone:centralStandardTime];
+    NSDate *eightPMInChicago = [formatter dateFromString:dateString];
+    NSLog(@"%@", eightPMInChicago);
+    
+    [formatter setTimeZone:cairoTime];
+    NSDate *eightPMInCairo = [formatter dateFromString:dateString];
+    NSLog(@"%@", eightPMInCairo);
+    
+    [formatter setTimeZone:taipeiTime];
+    NSDate *eightPMInTaipei = [formatter dateFromString:dateString];
+    
+    long long msCairo = [eightPMInCairo timeIntervalSince1970]/3600;
+    long long msChicago = [eightPMInChicago timeIntervalSince1970]/3600;
+    long long msTaipei = [eightPMInTaipei timeIntervalSince1970]/3600;
+    
+    NSLog(@"Time difference: %lld", msTaipei-msChicago);
+    
+    
 }
 
 - (void)loadInitialData {
+    // get time zone usin
     Contact *contact1 = [[Contact alloc] init];
     contact1.name = @"Mom";
     contact1.time = @"12:00";
-    contact1.location = @"Taiwan";
+    contact1.location = @"Taipei";
     [self.contacts addObject:contact1];
     
     Contact *contact2 = [[Contact alloc] init];
     contact2.name = @"Dad";
     contact2.time = @"12:00";
-    contact2.location = @"China";
+    contact2.location = @"Shanghai";
     [self.contacts addObject:contact2];
     
     Contact *contact3 = [[Contact alloc] init];
     contact3.name = @"Kevin";
     contact3.time = @"11:00";
-    contact3.location = @"New York";
+    contact3.location = @"New York"; // replace " " with "_"
     [self.contacts addObject:contact3];
 }
 
