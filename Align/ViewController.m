@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "ContactTableViewCell.h"
 #import "Contact.h"
+#import "AllContactsTableViewController.h"
 
 @interface ViewController ()
 
@@ -19,6 +20,15 @@
 @end
 
 @implementation ViewController
+
+- (IBAction)unwindToList:(UIStoryboardSegue *)segue {
+    //AllContactsTableViewController *source = [segue sourceViewController];
+    /*ToDoItem *item = source.toDoItem;
+    if (item != nil) {
+        [self.toDoItems addObject:item];
+        [self.tableView reloadData];
+    }*/
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -68,7 +78,7 @@
     [formatter setTimeZone:taipeiTime];
     NSDate *eightPMInTaipei = [formatter dateFromString:dateString];
     
-    long long msCairo = [eightPMInCairo timeIntervalSince1970]/3600;
+    //long long msCairo = [eightPMInCairo timeIntervalSince1970]/3600;
     long long msChicago = [eightPMInChicago timeIntervalSince1970]/3600;
     long long msTaipei = [eightPMInTaipei timeIntervalSince1970]/3600;
     

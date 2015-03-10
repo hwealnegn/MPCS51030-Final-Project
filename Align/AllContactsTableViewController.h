@@ -10,4 +10,6 @@
 
 @interface AllContactsTableViewController : UITableViewController
 
+- (IBAction)unwindToContacts:(UIStoryboardSegue *)segue;
+
 @end

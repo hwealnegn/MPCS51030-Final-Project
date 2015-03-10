@@ -16,10 +16,8 @@
 		3B1B93981AA5110100B2B1A0 /* AlignTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1B93971AA5110100B2B1A0 /* AlignTests.m */; };
 		3B1B93A61AA51B8C00B2B1A0 /* ContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1B93A51AA51B8C00B2B1A0 /* ContactTableViewCell.m */; };
 		3B1B93A91AA5214100B2B1A0 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1B93A81AA5214100B2B1A0 /* Contact.m */; };
-		3BBE57B41AACDE0B00A367F1 /* EmptySegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE57B31AACDE0B00A367F1 /* EmptySegue.m */; };
-		3BBE57B71AACDF0800A367F1 /* ContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE57B61AACDF0800A367F1 /* ContainerViewController.m */; };
+		3B3257271AAFA24A0058F8D6 /* AddContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3257261AAFA24A0058F8D6 /* AddContactViewController.m */; };
 		3BBE57BA1AACE46000A367F1 /* AllContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE57B91AACE46000A367F1 /* AllContactsTableViewController.m */; };
-		3BBE57BD1AACE67100A367F1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE57BC1AACE67100A367F1 /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,14 +48,10 @@
 		3B1B93A51AA51B8C00B2B1A0 /* ContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableViewCell.m; sourceTree = "<group>"; };
 		3B1B93A71AA5214100B2B1A0 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
 		3B1B93A81AA5214100B2B1A0 /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
-		3BBE57B21AACDE0B00A367F1 /* EmptySegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptySegue.h; sourceTree = "<group>"; };
-		3BBE57B31AACDE0B00A367F1 /* EmptySegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptySegue.m; sourceTree = "<group>"; };
-		3BBE57B51AACDF0800A367F1 /* ContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContainerViewController.h; sourceTree = "<group>"; };
-		3BBE57B61AACDF0800A367F1 /* ContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContainerViewController.m; sourceTree = "<group>"; };
+		3B3257251AAFA24A0058F8D6 /* AddContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactViewController.h; sourceTree = "<group>"; };
+		3B3257261AAFA24A0058F8D6 /* AddContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactViewController.m; sourceTree = "<group>"; };
 		3BBE57B81AACE46000A367F1 /* AllContactsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllContactsTableViewController.h; sourceTree = "<group>"; };
 		3BBE57B91AACE46000A367F1 /* AllContactsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllContactsTableViewController.m; sourceTree = "<group>"; };
-		3BBE57BB1AACE67100A367F1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		3BBE57BC1AACE67100A367F1 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,8 +93,6 @@
 		3B1B937A1AA5110100B2B1A0 /* Align */ = {
 			isa = PBXGroup;
 			children = (
-				3BBE57B21AACDE0B00A367F1 /* EmptySegue.h */,
-				3BBE57B31AACDE0B00A367F1 /* EmptySegue.m */,
 				3B1B937F1AA5110100B2B1A0 /* AppDelegate.h */,
 				3B1B93801AA5110100B2B1A0 /* AppDelegate.m */,
 				3B1B93821AA5110100B2B1A0 /* ViewController.h */,
@@ -110,12 +102,10 @@
 				3B1B93A41AA51B8C00B2B1A0 /* ContactTableViewCell.h */,
 				3B1B93A51AA51B8C00B2B1A0 /* ContactTableViewCell.m */,
 				3B1B93851AA5110100B2B1A0 /* Main.storyboard */,
-				3BBE57BB1AACE67100A367F1 /* MainViewController.h */,
-				3BBE57BC1AACE67100A367F1 /* MainViewController.m */,
+				3B3257251AAFA24A0058F8D6 /* AddContactViewController.h */,
+				3B3257261AAFA24A0058F8D6 /* AddContactViewController.m */,
 				3BBE57B81AACE46000A367F1 /* AllContactsTableViewController.h */,
 				3BBE57B91AACE46000A367F1 /* AllContactsTableViewController.m */,
-				3BBE57B51AACDF0800A367F1 /* ContainerViewController.h */,
-				3BBE57B61AACDF0800A367F1 /* ContainerViewController.m */,
 				3B1B93881AA5110100B2B1A0 /* Images.xcassets */,
 				3B1B938A1AA5110100B2B1A0 /* LaunchScreen.xib */,
 				3B1B937B1AA5110100B2B1A0 /* Supporting Files */,
@@ -249,13 +239,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B3257271AAFA24A0058F8D6 /* AddContactViewController.m in Sources */,
 				3B1B93A61AA51B8C00B2B1A0 /* ContactTableViewCell.m in Sources */,
 				3B1B93841AA5110100B2B1A0 /* ViewController.m in Sources */,
-				3BBE57B71AACDF0800A367F1 /* ContainerViewController.m in Sources */,
 				3B1B93A91AA5214100B2B1A0 /* Contact.m in Sources */,
-				3BBE57BD1AACE67100A367F1 /* MainViewController.m in Sources */,
 				3BBE57BA1AACE46000A367F1 /* AllContactsTableViewController.m in Sources */,
-				3BBE57B41AACDE0B00A367F1 /* EmptySegue.m in Sources */,
 				3B1B93811AA5110100B2B1A0 /* AppDelegate.m in Sources */,
 				3B1B937E1AA5110100B2B1A0 /* main.m in Sources */,
 			);
@@ -380,8 +368,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Align/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -390,8 +380,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Align/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

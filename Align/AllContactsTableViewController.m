@@ -9,14 +9,27 @@
 #import "AllContactsTableViewController.h"
 #import "ContactTableViewCell.h"
 #import "Contact.h"
+#import "AddContactViewController.h"
 
 @interface AllContactsTableViewController ()
 
 @property NSMutableArray *contacts;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
+
 @end
 
 @implementation AllContactsTableViewController
+
+- (IBAction)unwindToContacts:(UIStoryboardSegue *)segue {
+    AddContactViewController *source = [segue sourceViewController];
+    Contact *newContact = source.contact;
+     if (newContact != nil) {
+         [self.contacts addObject:newContact];
+         [self.tableView reloadData];
+     }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
