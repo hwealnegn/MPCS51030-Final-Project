@@ -25,6 +25,7 @@
     self.contactNames = [[NSMutableArray alloc] init];
     self.contactLocations = [[NSMutableArray alloc] init];
     self.contactTimeDifferences = [[NSMutableArray alloc] init];
+    self.contactSelections = [[NSMutableArray alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,6 +44,7 @@
         self.contact.name = self.nameField.text;
         self.contact.location = self.locationField.text;
         self.contact.time = @"3:00"; // need to implement logic where location is associated with time
+        self.contact.selected = NO; // will not display on main view unless selected
         
         // Save information to NSUserDefaults
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -80,7 +82,6 @@
         }
         
         // Save contact location; note: may be repeated (people may have same locations)
-        
         if ([defaults objectForKey:@"contactLocations"] != nil) {
             [self.contactLocations addObjectsFromArray:[defaults objectForKey:@"contactLocations"]];
             [self.contactLocations addObject:self.contact.location]; // add new contact
@@ -90,6 +91,20 @@
             NSLog(@"Initialize location array in NSUserDefaults");
             [self.contactLocations addObject:self.contact.location]; // add contact to array
             [defaults setObject:self.contactLocations forKey:@"contactLocations"]; // save array in defaults
+        }
+        
+        // Also have record of if contacts are selected or not
+        // Reference for storing booleans: http://stackoverflow.com/questions/3437942/how-to-deal-with-booleans-in-nsmutablearrays
+        NSNumber *boolean = [NSNumber numberWithBool:self.contact.selected];
+        if ([defaults objectForKey:@"contactSelections"] != nil) {
+            [self.contactSelections addObjectsFromArray:[defaults objectForKey:@"contactSelections"]];
+            [self.contactSelections addObject:boolean]; // add new contact
+            [defaults setObject:self.contactSelections forKey:@"contactSelections"]; // save updated array to defaults
+            
+        } else {
+            NSLog(@"Initialize location array in NSUserDefaults");
+            [self.contactSelections addObject:boolean]; // add contact to array
+            [defaults setObject:self.contactSelections forKey:@"contactSelections"]; // save array in defaults
         }
         
         [defaults synchronize];
