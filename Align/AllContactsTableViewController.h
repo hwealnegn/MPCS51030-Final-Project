@@ -12,4 +12,8 @@
 
 - (IBAction)unwindToContacts:(UIStoryboardSegue *)segue;
 
+@property (strong, nonatomic) NSMutableArray *contactNames;
+@property (strong, nonatomic) NSMutableArray *contactLocations;
+@property (strong, nonatomic) NSMutableArray *selectedContacts;
+
 @end

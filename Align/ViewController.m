@@ -76,15 +76,15 @@
     NSLog(@"%@", eightPMInCairo);
     
     [formatter setTimeZone:taipeiTime];
-    NSDate *eightPMInTaipei = [formatter dateFromString:dateString];
+    //NSDate *eightPMInTaipei = [formatter dateFromString:dateString];
     
     //long long msCairo = [eightPMInCairo timeIntervalSince1970]/3600;
-    long long msChicago = [eightPMInChicago timeIntervalSince1970]/3600;
-    long long msTaipei = [eightPMInTaipei timeIntervalSince1970]/3600;
+    //long long msChicago = [eightPMInChicago timeIntervalSince1970]/3600;
+    //long long msTaipei = [eightPMInTaipei timeIntervalSince1970]/3600;
     
-    NSLog(@"Time difference: %lld", msTaipei-msChicago);
+    //NSLog(@"Time difference: %lld", msTaipei-msChicago);
     
-    
+    NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 }
 
 - (void)loadInitialData {

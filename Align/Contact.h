@@ -13,5 +13,6 @@
 @property NSString *name;
 @property NSString *time;
 @property NSString *location;
+@property BOOL selected;
 
 @end

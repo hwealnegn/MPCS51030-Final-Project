@@ -13,4 +13,9 @@
 
 @property Contact *contact;
 
+// Store information of all contacts
+@property (strong, nonatomic) NSMutableArray *contactNames;
+@property (strong, nonatomic) NSMutableArray *contactLocations;
+@property (strong, nonatomic) NSMutableArray *contactTimeDifferences;
+
 @end

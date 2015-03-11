@@ -93,7 +93,7 @@
                             </tableView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lX0-Sy-hxI">
                                 <rect key="frame" x="0.0" y="510" width="600" height="90"/>
-                                <color key="backgroundColor" red="1" green="0.56126894453924292" blue="0.6703996322966943" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.37246973432789987" green="0.79752604166666663" blue="0.20076652956363963" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="90" id="5YR-hh-o18"/>
                                 </constraints>

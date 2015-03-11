@@ -23,12 +23,18 @@
 @implementation AllContactsTableViewController
 
 - (IBAction)unwindToContacts:(UIStoryboardSegue *)segue {
-    AddContactViewController *source = [segue sourceViewController];
+    /*AddContactViewController *source = [segue sourceViewController];
     Contact *newContact = source.contact;
      if (newContact != nil) {
          [self.contacts addObject:newContact];
          [self.tableView reloadData];
-     }
+     }*/
+    
+    [self loadInitialData];
+    [self.tableView reloadData];
+}
+
+- (IBAction)addContact:(id)sender {
 }
 
 - (void)viewDidLoad {
@@ -46,23 +52,18 @@
 }
 
 - (void)loadInitialData {
-    Contact *contact1 = [[Contact alloc] init];
-    contact1.name = @"Mom";
-    contact1.time = @"12:00";
-    contact1.location = @"Taiwan";
-    [self.contacts addObject:contact1];
+    // Load data from NSUserDefaults
+    self.contactNames = [[NSMutableArray alloc] init];
+    self.contactLocations = [[NSMutableArray alloc] init];
+    self.selectedContacts = [[NSMutableArray alloc] init];
     
-    Contact *contact2 = [[Contact alloc] init];
-    contact2.name = @"Dad";
-    contact2.time = @"12:00";
-    contact2.location = @"China";
-    [self.contacts addObject:contact2];
-    
-    Contact *contact3 = [[Contact alloc] init];
-    contact3.name = @"Kevin";
-    contact3.time = @"11:00";
-    contact3.location = @"New York";
-    [self.contacts addObject:contact3];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"contactNames"] != nil) {
+        [self.contactNames addObjectsFromArray:[defaults objectForKey:@"contactNames"]]; // add existing objects
+    }
+    if ([defaults objectForKey:@"contactLocations"] != nil) {
+        [self.contactLocations addObjectsFromArray:[defaults objectForKey:@"contactLocations"]];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,25 +80,83 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [self.contacts count];
+    //return [self.contacts count];
+    return [self.contactNames count];
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell" forIndexPath:indexPath];
     
-    Contact *contact = [self.contacts objectAtIndex:indexPath.row];
+    cell.contactName.text = [self.contactNames objectAtIndex:indexPath.row];
+    cell.contactLocation.text = [self.contactLocations objectAtIndex:indexPath.row];
+    
+    /*Contact *contact = [self.contacts objectAtIndex:indexPath.row];
     
     // Configure cell here!
     cell.contactName.text = contact.name;
     cell.contactTime.text = contact.time;
     cell.contactLocation.text = contact.location;
     
-    NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
+    NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);*/
+    
+    /*if (self.contactNames != nil) {
+        cell.contactName.text = [self.contactNames objectAtIndex:indexPath.row];
+        cell.contactLocation.text = [self.contactLocations objectAtIndex:indexPath.row];
+    }*/
+    
+    /*if (contact.selected) {
+        cell.selected = YES;
+    } else {
+        cell.selected = NO;
+    }*/
 
     return cell;
 }
 
+/*- (void) tableView: (UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"Selected! %ld", (long)indexPath.row);
+    
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    Contact *tappedContact = [self.contacts objectAtIndex:indexPath.row];
+    tappedContact.selected = !tappedContact.selected;
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    
+    
+    // Keep track of selected contacts
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    if ([defaults objectForKey:@"selectedContacts"] != nil) {
+        NSLog(@"There's something");
+        
+        NSInteger exists = 0;
+        
+        [self.selectedContacts addObjectsFromArray:[defaults objectForKey:@"selectedContacts"]];
+        
+        // Check if contact is already in array (NOTE: NEED TO UPDATE THIS!)
+        for (NSString *name in self.selectedContacts){
+            if ([name isEqualToString:[self.contactNames objectAtIndex:indexPath.row]]) { // contact already saved
+                exists = 1;
+                break;
+            }
+        }
+        
+        // If contact is not found
+        if (exists == 0) {
+            [self.selectedContacts addObject:[self.contactNames objectAtIndex:indexPath.row]]; // add new contact
+            [defaults setObject:self.selectedContacts forKey:@"selectedContacts"]; // save updated array to defaults
+        }
+        
+    } else {
+        NSLog(@"Initialize name array in NSUserDefaults");
+        NSLog(@"Name: %@", [self.contactNames objectAtIndex:indexPath.row]);
+        [self.selectedContacts addObject:[self.contactNames objectAtIndex:indexPath.row]]; // add contact to array
+        
+        [defaults setObject:self.selectedContacts forKey:@"selectedContacts"]; // save array in defaults
+    }
+    NSLog(@"size: %lu", (unsigned long)[self.selectedContacts count]);
+    [defaults synchronize];
+}*/
 
 /*
 // Override to support conditional editing of the table view.
