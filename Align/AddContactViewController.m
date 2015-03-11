@@ -79,35 +79,16 @@
             [defaults setObject:self.contactNames forKey:@"contactNames"]; // save array in defaults
         }
         
-        // Save contact location
+        // Save contact location; note: may be repeated (people may have same locations)
+        
         if ([defaults objectForKey:@"contactLocations"] != nil) {
-            NSLog(@"There's something");
-            
-            NSInteger exists = 0;
-            
             [self.contactLocations addObjectsFromArray:[defaults objectForKey:@"contactLocations"]];
-            
-            // Check if contact is already in array (NOTE: NEED TO UPDATE THIS!)
-            for (NSString *name in self.contactLocations){
-                if ([name isEqualToString:self.contact.location]) { // contact already saved
-                    exists = 1;
-                    break;
-                }
-            }
-            
-            // If contact is not found
-            if (exists == 0) {
-                [self.contactLocations addObject:self.contact.location]; // add new contact
-                [defaults setObject:self.contactLocations forKey:@"contactLocations"]; // save updated array to defaults
-            }
+            [self.contactLocations addObject:self.contact.location]; // add new contact
+            [defaults setObject:self.contactLocations forKey:@"contactLocations"]; // save updated array to defaults
             
         } else {
-            NSLog(@"Initialize name array in NSUserDefaults");
-            NSLog(@"Name: %@", self.contact.location);
+            NSLog(@"Initialize location array in NSUserDefaults");
             [self.contactLocations addObject:self.contact.location]; // add contact to array
-            
-            NSLog(@"size: %lu", (unsigned long)[self.contactLocations count]);
-            
             [defaults setObject:self.contactLocations forKey:@"contactLocations"]; // save array in defaults
         }
         

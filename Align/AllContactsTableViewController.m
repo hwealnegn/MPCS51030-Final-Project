@@ -117,13 +117,13 @@
     NSLog(@"Selected! %ld", (long)indexPath.row);
     
     // Toggle bool for whether contact has been selected or not
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    /*[tableView deselectRowAtIndexPath:indexPath animated:NO];
     Contact *tappedContact = [self.contacts objectAtIndex:indexPath.row];
     tappedContact.selected = !tappedContact.selected;
-    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];*/
     
     
-    // Keep track of selected contacts
+    // Keep track of selected contacts -- DOES NOT WORK PROPERLY
     /*NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     if ([defaults objectForKey:@"selectedContacts"] != nil) {
@@ -166,17 +166,27 @@
 }
 */
 
-/*
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        [self.contactNames removeObjectAtIndex:indexPath.row];
+        [defaults setObject:self.contactNames forKey:@"contactNames"];
+        
+        [self.contactLocations removeObjectAtIndex:indexPath.row];
+        [defaults setObject:self.contactLocations forKey:@"contactLocations"];
+        
+        [defaults synchronize];
+        
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.
