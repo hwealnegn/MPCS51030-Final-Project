@@ -113,10 +113,10 @@
     return cell;
 }
 
-/*- (void) tableView: (UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void) tableView: (UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"Selected! %ld", (long)indexPath.row);
     
-    
+    // Toggle bool for whether contact has been selected or not
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     Contact *tappedContact = [self.contacts objectAtIndex:indexPath.row];
     tappedContact.selected = !tappedContact.selected;
@@ -124,7 +124,7 @@
     
     
     // Keep track of selected contacts
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    /*NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     if ([defaults objectForKey:@"selectedContacts"] != nil) {
         NSLog(@"There's something");
@@ -155,8 +155,8 @@
         [defaults setObject:self.selectedContacts forKey:@"selectedContacts"]; // save array in defaults
     }
     NSLog(@"size: %lu", (unsigned long)[self.selectedContacts count]);
-    [defaults synchronize];
-}*/
+    [defaults synchronize];*/
+}
 
 /*
 // Override to support conditional editing of the table view.
