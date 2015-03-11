@@ -15,6 +15,6 @@
 @property (strong, nonatomic) NSMutableArray *contactNames;
 @property (strong, nonatomic) NSMutableArray *contactLocations;
 @property (strong, nonatomic) NSMutableArray *contactSelections;
-@property (strong, nonatomic) NSMutableArray *selectedContacts;
+@property (strong, nonatomic) NSMutableArray *contactTimes;
 
 @end

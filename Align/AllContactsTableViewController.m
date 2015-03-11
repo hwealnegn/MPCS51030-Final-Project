@@ -43,9 +43,11 @@
     self.contactNames = [[NSMutableArray alloc] init];
     self.contactLocations = [[NSMutableArray alloc] init];
     self.contactSelections = [[NSMutableArray alloc] init];
-    self.selectedContacts = [[NSMutableArray alloc] init];
+    self.contactTimes = [[NSMutableArray alloc] init];
 
     [self loadInitialData];
+    
+    NSLog(@"Size of contactNames: %lu, contacts: %lu, contactSelections: %lu", (unsigned long)[self.contactNames count], (unsigned long)[self.contacts count], (unsigned long)[self.contactSelections count]);
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -68,16 +70,23 @@
     if ([defaults objectForKey:@"contactSelections"] != nil) {
         [self.contactSelections addObjectsFromArray:[defaults objectForKey:@"contactSelections"]];
     }
+    if ([defaults objectForKey:@"contactTimes"] != nil) {
+        [self.contactTimes addObjectsFromArray:[defaults objectForKey:@"contactTimes"]];
+    }
     
     if (self.contactNames != nil) {
         for (int i=0; i<[self.contactNames count]; i++){
             Contact *addContact = [[Contact alloc] init];
             addContact.name = self.contactNames[i];
-            addContact.location = self.contactNames[i];
+            addContact.location = self.contactLocations[i];
             BOOL b = [[self.contactSelections objectAtIndex:i] boolValue]; // convert back to bool
             addContact.selected = b;
+            addContact.time = self.contactTimes[i];
+            
+            [self.contacts addObject:addContact];
         }
     }
+    NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -129,19 +138,27 @@
 - (void) tableView: (UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"Selected! %ld", (long)indexPath.row);
     
+    // Toggle 'selected' boolean
     Contact *tappedContact = [self.contacts objectAtIndex:indexPath.row];
-    tappedContact.selected = !tappedContact.selected; // toggle
+    tappedContact.selected = !tappedContact.selected;
     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     
-    // Get 'selected' boolean from NSUserDefaults
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
+    // Update NSUserDefaults -- NOTE: SOME ISSUES HERE WITH UPDATING/ARRAY (both local and defaults)
+    // Attempt from 3/11 (Wednesday)
+    /*NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"contactSelections"] != nil) {
-        // Toggle stored boolean and update defaults
+        NSLog(@"Updating selection array at %ld", (long)indexPath.row);
+        NSNumber *boolean = [NSNumber numberWithBool:tappedContact.selected];
+        //[self.contactSelections addObjectsFromArray:[defaults objectForKey:@"contactSelections"]]; // get selections array
         
+        NSLog(@"Size of contactSelections array: %lu", [self.contactSelections count]);
+        
+        self.contactSelections[indexPath.row] = boolean; // update selections array at specified index (i.e. selected row)
+        [defaults setObject:self.contactSelections forKey:@"contactSelections"]; // save updated array to defaults
     } else {
         NSLog(@"Contact selection booleans were not initialized/stored.");
-    }
+    }*/
+    // End of 3/11 attempt
     
     // Toggle bool for whether contact has been selected or not
     /*[tableView deselectRowAtIndexPath:indexPath animated:NO];
@@ -200,11 +217,38 @@
         // Delete the row from the data source
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
+        if ([defaults objectForKey:@"contactNames"] != nil) {
+            [self.contactNames addObjectsFromArray:[defaults objectForKey:@"contactNames"]]; // add existing objects
+        }
+        if ([defaults objectForKey:@"contactLocations"] != nil) {
+            [self.contactLocations addObjectsFromArray:[defaults objectForKey:@"contactLocations"]];
+        }
+        if ([defaults objectForKey:@"contactSelections"] != nil) {
+            [self.contactSelections addObjectsFromArray:[defaults objectForKey:@"contactSelections"]];
+        }
+        if ([defaults objectForKey:@"contactTimes"] != nil) {
+            [self.contactTimes addObjectsFromArray:[defaults objectForKey:@"contactTimes"]];
+        }
+        
+        // Remove objects from all arrays
+        [self.contacts removeObjectAtIndex:indexPath.row];
+        
         [self.contactNames removeObjectAtIndex:indexPath.row];
         [defaults setObject:self.contactNames forKey:@"contactNames"];
         
         [self.contactLocations removeObjectAtIndex:indexPath.row];
         [defaults setObject:self.contactLocations forKey:@"contactLocations"];
+        
+        [self.contactSelections removeObjectAtIndex:indexPath.row];
+        NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
+        for (int i=0; i<[self.contactSelections count]; i++) {
+            NSNumber *boolean = [NSNumber numberWithBool:self.contactSelections[i]]; // convert to bool for defaults
+            [tmpArray addObject:boolean];
+        }
+        [defaults setObject:tmpArray forKey:@"contactSelections"]; // store array of booleans in defaults
+        
+        [self.contactTimes removeObjectAtIndex:indexPath.row];
+        [defaults setObject:self.contactTimes forKey:@"contactTimes"];
         
         [defaults synchronize];
         

@@ -43,7 +43,7 @@
         self.contact = [[Contact alloc] init];
         self.contact.name = self.nameField.text;
         self.contact.location = self.locationField.text;
-        self.contact.time = @"3:00"; // need to implement logic where location is associated with time
+        self.contact.time = @"3"; // need to implement logic where location is associated with time
         self.contact.selected = NO; // will not display on main view unless selected
         
         // Save information to NSUserDefaults
@@ -91,6 +91,18 @@
             NSLog(@"Initialize location array in NSUserDefaults");
             [self.contactLocations addObject:self.contact.location]; // add contact to array
             [defaults setObject:self.contactLocations forKey:@"contactLocations"]; // save array in defaults
+        }
+        
+        // Save time difference (NEED TO UPDATE TO DO TIME CALCULATIONS)
+        if ([defaults objectForKey:@"contactTimes"] != nil) {
+            [self.contactTimeDifferences addObjectsFromArray:[defaults objectForKey:@"contactTimes"]];
+            [self.contactTimeDifferences addObject:self.contact.time]; // add new contact
+            [defaults setObject:self.contactTimeDifferences forKey:@"contactTimes"]; // save updated array to defaults
+            
+        } else {
+            NSLog(@"Initialize time array in NSUserDefaults");
+            [self.contactTimeDifferences addObject:self.contact.time]; // add time to array
+            [defaults setObject:self.contactTimeDifferences forKey:@"contactTimes"]; // save array in defaults
         }
         
         // Also have record of if contacts are selected or not

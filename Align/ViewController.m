@@ -132,7 +132,7 @@
     cell.contactTime.text = contact.time;
     cell.contactLocation.text = contact.location;
     
-    NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
+    //NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
     
     return cell;
 }
