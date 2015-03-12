@@ -56,69 +56,55 @@
             NSInteger exists = 0;
             
             [self.contactNames addObjectsFromArray:[defaults objectForKey:@"contactNames"]];
+            [self.contactLocations addObjectsFromArray:[defaults objectForKey:@"contactLocations"]];
+            [self.contactTimeDifferences addObjectsFromArray:[defaults objectForKey:@"contactTimes"]];
+            [self.contactSelections addObjectsFromArray:[defaults objectForKey:@"contactSelections"]];
             
             // Check if contact is already in array (NOTE: NEED TO UPDATE THIS!)
             for (NSString *name in self.contactNames){
                 if ([name isEqualToString:self.contact.name]) { // contact already saved
+                    NSLog(@"Contact already exists");
                     exists = 1;
                     break;
                 }
             }
             
-            // If contact is not found
+            // If contact is not found, create new one
             if (exists == 0) {
-                [self.contactNames addObject:self.contact.name]; // add new contact
+                NSLog(@"Creating new contact");
+                
+                // Add new contact info to respective arrays
+                // Reference for storing booleans: http://stackoverflow.com/questions/3437942/how-to-deal-with-booleans-in-nsmutablearrays
+                [self.contactNames addObject:self.contact.name];
+                [self.contactLocations addObject:self.contact.location];
+                [self.contactTimeDifferences addObject:self.contact.time];
+                NSNumber *boolean = [NSNumber numberWithBool:self.contact.selected];
+                [self.contactSelections addObject:boolean];
+                
+                // Update defaults
                 [defaults setObject:self.contactNames forKey:@"contactNames"]; // save updated array to defaults
+                [defaults setObject:self.contactLocations forKey:@"contactLocations"];
+                [defaults setObject:self.contactTimeDifferences forKey:@"contactTimes"];
+                [defaults setObject:self.contactSelections forKey:@"contactSelections"];
             }
             
         } else {
             NSLog(@"Initialize name array in NSUserDefaults");
-            NSLog(@"Name: %@", self.contact.name);
+            //NSLog(@"Name: %@", self.contact.name);
             [self.contactNames addObject:self.contact.name]; // add contact to array
+            [self.contactLocations addObject:self.contact.location];
+            [self.contactTimeDifferences addObject:self.contact.time];
+            NSNumber *boolean = [NSNumber numberWithBool:self.contact.selected];
+            [self.contactSelections addObject:boolean];
             
-            NSLog(@"size: %lu", (unsigned long)[self.contactNames count]);
+            //NSLog(@"size: %lu", (unsigned long)[self.contactNames count]);
             
             [defaults setObject:self.contactNames forKey:@"contactNames"]; // save array in defaults
+            [defaults setObject:self.contactLocations forKey:@"contactLocations"];
+            [defaults setObject:self.contactTimeDifferences forKey:@"contactTimes"];
+            [defaults setObject:self.contactSelections forKey:@"contactSelections"];
         }
-        
-        // Save contact location; note: may be repeated (people may have same locations)
-        if ([defaults objectForKey:@"contactLocations"] != nil) {
-            [self.contactLocations addObjectsFromArray:[defaults objectForKey:@"contactLocations"]];
-            [self.contactLocations addObject:self.contact.location]; // add new contact
-            [defaults setObject:self.contactLocations forKey:@"contactLocations"]; // save updated array to defaults
-            
-        } else {
-            NSLog(@"Initialize location array in NSUserDefaults");
-            [self.contactLocations addObject:self.contact.location]; // add contact to array
-            [defaults setObject:self.contactLocations forKey:@"contactLocations"]; // save array in defaults
-        }
-        
-        // Save time difference (NEED TO UPDATE TO DO TIME CALCULATIONS)
-        if ([defaults objectForKey:@"contactTimes"] != nil) {
-            [self.contactTimeDifferences addObjectsFromArray:[defaults objectForKey:@"contactTimes"]];
-            [self.contactTimeDifferences addObject:self.contact.time]; // add new contact
-            [defaults setObject:self.contactTimeDifferences forKey:@"contactTimes"]; // save updated array to defaults
-            
-        } else {
-            NSLog(@"Initialize time array in NSUserDefaults");
-            [self.contactTimeDifferences addObject:self.contact.time]; // add time to array
-            [defaults setObject:self.contactTimeDifferences forKey:@"contactTimes"]; // save array in defaults
-        }
-        
-        // Also have record of if contacts are selected or not
-        // Reference for storing booleans: http://stackoverflow.com/questions/3437942/how-to-deal-with-booleans-in-nsmutablearrays
-        NSNumber *boolean = [NSNumber numberWithBool:self.contact.selected];
-        if ([defaults objectForKey:@"contactSelections"] != nil) {
-            [self.contactSelections addObjectsFromArray:[defaults objectForKey:@"contactSelections"]];
-            [self.contactSelections addObject:boolean]; // add new contact
-            [defaults setObject:self.contactSelections forKey:@"contactSelections"]; // save updated array to defaults
-            
-        } else {
-            NSLog(@"Initialize location array in NSUserDefaults");
-            [self.contactSelections addObject:boolean]; // add contact to array
-            [defaults setObject:self.contactSelections forKey:@"contactSelections"]; // save array in defaults
-        }
-        
+
         [defaults synchronize];
         
         NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);

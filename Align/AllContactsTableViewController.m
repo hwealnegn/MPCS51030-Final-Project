@@ -27,11 +27,8 @@
     Contact *newContact = source.contact;
      if (newContact != nil) {
          [self.contacts addObject:newContact];
-         //[self.tableView reloadData];
+         [self.tableView reloadData];
      }
-    
-    //[self loadInitialData];
-    [self.tableView reloadData];
 }
 
 - (IBAction)addContact:(id)sender {
@@ -48,12 +45,6 @@
     [self loadInitialData];
     
     NSLog(@"Size of contactNames: %lu, contacts: %lu, contactSelections: %lu", (unsigned long)[self.contactNames count], (unsigned long)[self.contacts count], (unsigned long)[self.contactSelections count]);
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     NSLog(@"SECOND VIEW DID LOAD");
 }
@@ -216,19 +207,6 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        
-        if ([defaults objectForKey:@"contactNames"] != nil) {
-            [self.contactNames addObjectsFromArray:[defaults objectForKey:@"contactNames"]]; // add existing objects
-        }
-        if ([defaults objectForKey:@"contactLocations"] != nil) {
-            [self.contactLocations addObjectsFromArray:[defaults objectForKey:@"contactLocations"]];
-        }
-        if ([defaults objectForKey:@"contactSelections"] != nil) {
-            [self.contactSelections addObjectsFromArray:[defaults objectForKey:@"contactSelections"]];
-        }
-        if ([defaults objectForKey:@"contactTimes"] != nil) {
-            [self.contactTimes addObjectsFromArray:[defaults objectForKey:@"contactTimes"]];
-        }
         
         // Remove objects from all arrays
         [self.contacts removeObjectAtIndex:indexPath.row];
