@@ -101,9 +101,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell" forIndexPath:indexPath];
     
-    //cell.contactName.text = [self.contactNames objectAtIndex:indexPath.row];
-    //cell.contactLocation.text = [self.contactLocations objectAtIndex:indexPath.row];
-    
     Contact *contact = [self.contacts objectAtIndex:indexPath.row];
     
     // Configure cell here!
@@ -111,11 +108,6 @@
     cell.contactLocation.text = contact.location;
     
     NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
-    
-    /*if (self.contactNames != nil) {
-        cell.contactName.text = [self.contactNames objectAtIndex:indexPath.row];
-        cell.contactLocation.text = [self.contactLocations objectAtIndex:indexPath.row];
-    }*/
     
     /*if (contact.selected) {
         cell.selected = YES;
