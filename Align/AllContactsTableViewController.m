@@ -128,11 +128,15 @@
 
 - (void) tableView: (UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"Selected! %ld", (long)indexPath.row);
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     // Toggle 'selected' boolean
     Contact *tappedContact = [self.contacts objectAtIndex:indexPath.row];
     tappedContact.selected = !tappedContact.selected;
-    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    
+    for (int i=0; i<[self.contacts count]; i++) {
+        Contact *tmp = self.contacts[i];
+        NSLog(@"Toggled? %d: %d", i, tmp.selected);
+    }
     
     // Update NSUserDefaults -- NOTE: SOME ISSUES HERE WITH UPDATING/ARRAY (both local and defaults)
     // Attempt from 3/11 (Wednesday)
