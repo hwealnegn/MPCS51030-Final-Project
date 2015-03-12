@@ -135,8 +135,18 @@
     
     for (int i=0; i<[self.contacts count]; i++) {
         Contact *tmp = self.contacts[i];
-        NSLog(@"Toggled? %d: %d", i, tmp.selected);
+        BOOL tmpBool = tmp.selected;
+        
+        NSNumber *boolean = [NSNumber numberWithBool:tmpBool];
+        self.contactSelections[i] = boolean;
+        
+        BOOL test = [[self.contactSelections objectAtIndex:i] boolValue];
+        NSLog(@"Toggled? %d: %d, %d", i, tmpBool, test);
     }
+    
+    // Update defaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:self.contactSelections forKey:@"contactSelections"];
     
     // Update NSUserDefaults -- NOTE: SOME ISSUES HERE WITH UPDATING/ARRAY (both local and defaults)
     // Attempt from 3/11 (Wednesday)
