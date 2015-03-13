@@ -10,6 +10,7 @@
 #import "ContactTableViewCell.h"
 #import "Contact.h"
 #import "AllContactsTableViewController.h"
+#import "QuartzCore/CALayer.h"
 
 @interface ViewController ()
 
@@ -78,7 +79,15 @@
     [self loadInitialData];
     
     // Initialize scroll view
-    [self.scrollView setContentSize:CGSizeMake(1200, 90)];
+    [self.bottomScroll setContentSize:CGSizeMake(1200, 90)];
+    
+    // Add shadow to scroll view image
+    // Reference: http://stackoverflow.com/questions/2044479/what-is-the-best-way-to-create-a-shadow-behind-a-uiimageview
+    self.scrollImage.layer.shadowColor = [UIColor purpleColor].CGColor;
+    self.scrollImage.layer.shadowOffset = CGSizeMake(1, 1);
+    self.scrollImage.layer.shadowOpacity = 0.8f;
+    self.scrollImage.layer.shadowRadius = 4.0f;
+    self.scrollImage.clipsToBounds = NO;
     
     // Set background image
     // Reference for making navigation bar transparent: http://stackoverflow.com/questions/2315862/make-uinavigationbar-transparent
@@ -94,6 +103,11 @@
     [self.dayView setImage:[UIImage imageNamed:@"daySky"]];
     [self.view addSubview:self.dayView];
     [self.view sendSubviewToBack:self.dayView];
+    
+    self.sunView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.sunView setImage:[UIImage imageNamed:@"sunSky"]];
+    [self.view addSubview:self.sunView];
+    [self.view sendSubviewToBack:self.sunView];
     
     self.nightView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.nightView setImage:[UIImage imageNamed:@"nightSky"]];
@@ -276,7 +290,9 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     NSInteger pageWidth = scrollView.frame.size.width;
     CGFloat maxPosition = 1200.0 - pageWidth;
+    CGFloat quarterPosition = maxPosition / 4.0;
     CGFloat midPosition = maxPosition / 2.0;
+    CGFloat threeQuarterPosition = 0.75 * maxPosition;
     CGFloat position = scrollView.contentOffset.x;
     CGFloat increment = position/maxPosition;
     NSInteger hour = increment*24;
@@ -285,16 +301,36 @@
     // Reference to keep leading zero: http://stackoverflow.com/questions/10790925/xcode-iphone-sdk-keep-nsinteger-zero-at-beginning
     self.yourTime.text = [NSString stringWithFormat:@"%ld:%02ld", (long)hour, (long)minute]; // something wrong with this
     
-    NSLog(@"Position: %f, increment: %f, hour: %ld, minute: %ld", position, increment, (long)hour, (long)minute);
+    //NSLog(@"Position: %f, increment: %f, hour: %ld, minute: %ld", position, increment, (long)hour, (long)minute);
     
     // Set alpha values of sky relative to position of scroll view
-    if (position < maxPosition/2.0) {
+    /*if (position < maxPosition/2.0) {
         self.dayView.alpha = position/midPosition;
         self.nightView.alpha = 1 - position/midPosition;
     } else {
         self.dayView.alpha = (maxPosition - position)/midPosition;
         self.nightView.alpha = 1 - (maxPosition - position)/midPosition;
+    }*/
+    
+    if (position < maxPosition/4.0) { // 0 to quarterPosition
+        self.dayView.alpha = 0;
+        self.sunView.alpha = position/quarterPosition;
+        self.nightView.alpha = 1 - position/quarterPosition;
+    } else if (position >= maxPosition/4.0 && position < maxPosition/2.0) { // quarterPosition to midPosition
+        self.dayView.alpha = (position-quarterPosition)/(midPosition-quarterPosition);
+        self.sunView.alpha = 1 - (position-quarterPosition)/(midPosition-quarterPosition);
+        self.nightView.alpha = 0;
+    } else if (position >= maxPosition/2.0 && position < (3.0 * maxPosition)/4.0){ // midPosition to threeQuarterPosition
+        self.dayView.alpha = 1 - (position-midPosition)/(threeQuarterPosition-midPosition);
+        self.sunView.alpha = (position - midPosition)/(threeQuarterPosition-midPosition);
+        self.nightView.alpha = 0;
+    } else { // threeQuarterPosition to maxPosition
+        self.dayView.alpha = 0;
+        self.sunView.alpha = 1 - (position - threeQuarterPosition)/(maxPosition-threeQuarterPosition);
+        self.nightView.alpha = (position - threeQuarterPosition)/(maxPosition-threeQuarterPosition);
     }
+    
+    NSLog(@"Day: %f, Sun: %f, Night: %f", self.dayView.alpha, self.sunView.alpha, self.nightView.alpha);
 }
 
 @end
