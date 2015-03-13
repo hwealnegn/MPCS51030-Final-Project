@@ -46,16 +46,7 @@
         self.contact.time = @"3"; // need to implement logic where location is associated with time
         self.contact.selected = NO; // will not display on main view unless selected
         
-        
-        
-        // Determine if specified location is listed in NSTimeZones
-        // If so, set contact time to difference in time from user's time
-        /*NSArray *timeZoneNames = [NSTimeZone knownTimeZoneNames];
-         for (int i=0; i<[timeZoneNames count]; i++){
-         NSLog(@"%@", timeZoneNames[i]);
-         }*/
-        
-        // Trying out a different method
+        // Calculate time difference
         // Reference: http://stackoverflow.com/questions/5646539/iphonefind-the-current-timezone-offset-in-hours
         NSTimeZone *destinationTimeZone = [NSTimeZone systemTimeZone];
         float timeZoneOffset = [destinationTimeZone secondsFromGMT] / 3600.0;
@@ -65,8 +56,6 @@
         
         NSArray *timeZoneNames = [NSTimeZone knownTimeZoneNames];
         for (int i=0; i<[timeZoneNames count]; i++){
-            //NSLog(@"%@", timeZoneNames[i]);
-            
             // Get city name
             NSString *zone = timeZoneNames[i];
             NSString *city;

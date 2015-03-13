@@ -56,7 +56,7 @@
      NSString *resultString = [dateFormatter stringFromDate: currentTime];
     self.yourTime.text = resultString;
     
-    // Trying out a different method
+    // Calculate time differences
     // Reference: http://stackoverflow.com/questions/5646539/iphonefind-the-current-timezone-offset-in-hours
     NSTimeZone *destinationTimeZone = [NSTimeZone systemTimeZone];
     float timeZoneOffset = [destinationTimeZone secondsFromGMT] / 3600.0;
@@ -68,7 +68,7 @@
     for (int i=0; i<[timeZoneNames count]; i++){
         //NSLog(@"%@", timeZoneNames[i]);
         
-        // get city name
+        // Get city name
         NSString *zone = timeZoneNames[i];
         NSString *city;
         NSRange range = [zone rangeOfString:@"/" options:NSBackwardsSearch];
@@ -102,39 +102,6 @@
     for (int i=0; i<[self.contacts count]; i++) {
         NSLog(@"Contact: %@, time: %@, location: %@", self.contactNames[i], self.contactTimes[i], self.contactLocations[i]);
     }
-    
-    NSLog(@"Time in Taipei: %@", [NSTimeZone timeZoneWithName:@"Asia/Taipei"]);
-    
-    // Example code from http://rypress.com/tutorials/objective-c/data-types/dates
-    NSTimeZone *centralStandardTime = [NSTimeZone timeZoneWithAbbreviation:@"CST"];
-    NSTimeZone *cairoTime = [NSTimeZone timeZoneWithName:@"Africa/Cairo"];
-    NSTimeZone *taipeiTime = [NSTimeZone timeZoneWithName:@"Asia/Taipei"];
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    NSLocale *posix = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    
-    
-    [formatter setLocale:posix];
-    //[formatter setDateFormat:@"M.d.y h:mm a"];
-    [formatter setDateFormat:@"h a"];
-    NSString *dateString = @"8 PM";
-    //NSString *dateString = @"11.4.2012 8:09 PM";
-    
-    [formatter setTimeZone:centralStandardTime];
-    NSDate *eightPMInChicago = [formatter dateFromString:dateString];
-    NSLog(@"%@", eightPMInChicago);
-    
-    [formatter setTimeZone:cairoTime];
-    NSDate *eightPMInCairo = [formatter dateFromString:dateString];
-    NSLog(@"%@", eightPMInCairo);
-    
-    [formatter setTimeZone:taipeiTime];
-    //NSDate *eightPMInTaipei = [formatter dateFromString:dateString];
-    
-    //long long msCairo = [eightPMInCairo timeIntervalSince1970]/3600;
-    //long long msChicago = [eightPMInChicago timeIntervalSinceNow]/3600;
-    //long long msTaipei = [eightPMInTaipei timeIntervalSince1970]/3600;
-    //NSLog(@"Time difference: %lld", msTaipei-msChicago);
     
     NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 }
@@ -180,24 +147,6 @@
     }
     
     NSLog(@"Number of selected contacts: %lu", (unsigned long)[self.selectedContacts count]);
-    
-    /*Contact *contact1 = [[Contact alloc] init];
-    contact1.name = @"Mom";
-    contact1.time = @"12:00";
-    contact1.location = @"Taipei";
-    [self.contacts addObject:contact1];
-    
-    Contact *contact2 = [[Contact alloc] init];
-    contact2.name = @"Dad";
-    contact2.time = @"12:00";
-    contact2.location = @"Shanghai";
-    [self.contacts addObject:contact2];
-    
-    Contact *contact3 = [[Contact alloc] init];
-    contact3.name = @"Kevin";
-    contact3.time = @"11:00";
-    contact3.location = @"New York"; // replace " " with "_"
-    [self.contacts addObject:contact3];*/
 }
 
 - (void)didReceiveMemoryWarning {
@@ -221,7 +170,6 @@
     
     // Configure cell here!
     cell.contactName.text = contact.name;
-    //cell.contactTime.text = contact.time;
     cell.contactLocation.text = contact.location;
     
     // Contact's time should be displaced from value at yourTime label
@@ -240,14 +188,10 @@
     
     NSRange range = [currentTime rangeOfString:@":" options:NSBackwardsSearch]; // minutes
     if (range.location != NSNotFound) {
-        //hours = [currentTime substringToIndex:range.location];
         hours = [NSString stringWithFormat:@"%d", (int)timeDifference];
-        // Take the difference from the hours
-        
         minutes = [currentTime substringFromIndex:range.location+1];
     }
     
-    //NSString *diffAsStr = [NSString stringWithFormat:@"%f", timeDifference];
     NSString *diffAsStr = [NSString stringWithFormat:@"%@:%@", hours, minutes];
     NSLog(@"Test: %@:%@ -- %@", hours, minutes, diffAsStr);
     cell.contactTime.text = diffAsStr;
