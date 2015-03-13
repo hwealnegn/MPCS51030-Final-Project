@@ -55,6 +55,14 @@
     [dateFormatter setDateFormat:@"hh:mm"];
      NSString *resultString = [dateFormatter stringFromDate: currentTime];
     self.yourTime.text = resultString;
+    long long msSelf = [currentTime timeIntervalSinceNow]/3600;
+    NSLog(@"Current milliseconds: %lld", msSelf);
+    
+    // Trying out a different method
+    // Reference: http://stackoverflow.com/questions/5646539/iphonefind-the-current-timezone-offset-in-hours
+    NSTimeZone *destinationTimeZone = [NSTimeZone systemTimeZone];
+    float timeZoneOffset = [destinationTimeZone secondsFromGMT] / 3600.0;
+    NSLog(@"Time zone offset: %f", timeZoneOffset);
     
     NSLog(@"FIRST VIEW DID LOAD");
     
@@ -72,7 +80,29 @@
             city = zone;
         }
         
-        //NSLog(@"%@", city);
+        NSLog(@"%@", city);
+        
+        for (int j=0; j<[self.contacts count]; j++) {
+            NSString *contactCity = self.contactLocations[j];
+            if ([contactCity isEqualToString:city]) {
+                NSTimeZone *contactTimeZone = [NSTimeZone timeZoneWithName:zone];
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setTimeZone:contactTimeZone];
+                
+                // Attempt #2
+                float contactTZOffset = [contactTimeZone secondsFromGMT] / 3600.0;
+                NSLog(@"Time where contact is: %f", contactTZOffset-timeZoneOffset);
+                
+                float timeDifference = contactTZOffset-timeZoneOffset;
+                NSString *diffAsStr = [NSString stringWithFormat:@"%f", timeDifference];
+                
+                self.contactTimes[j] = diffAsStr;
+            }
+        }
+    }
+    
+    for (int i=0; i<[self.contacts count]; i++) {
+        NSLog(@"Contact: %@, time: %@, location: %@", self.contactNames[i], self.contactTimes[i], self.contactLocations[i]);
     }
     
     NSLog(@"Time in Taipei: %@", [NSTimeZone timeZoneWithName:@"Asia/Taipei"]);
@@ -104,9 +134,8 @@
     //NSDate *eightPMInTaipei = [formatter dateFromString:dateString];
     
     //long long msCairo = [eightPMInCairo timeIntervalSince1970]/3600;
-    //long long msChicago = [eightPMInChicago timeIntervalSince1970]/3600;
+    //long long msChicago = [eightPMInChicago timeIntervalSinceNow]/3600;
     //long long msTaipei = [eightPMInTaipei timeIntervalSince1970]/3600;
-    
     //NSLog(@"Time difference: %lld", msTaipei-msChicago);
     
     NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
