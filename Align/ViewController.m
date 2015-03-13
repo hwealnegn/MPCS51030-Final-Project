@@ -37,10 +37,18 @@
     [self.selectContacts reloadData];
     [self.scrollView addSubview:self.scrollImage];
     
-    // Initialize scroll view at current hour's time
+    // Initialize scroll view at current time
     NSDate *currentTime = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"HH:mm"];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute fromDate:currentTime];
+    NSInteger hourNow = [components hour];
+    NSInteger minuteNow = [components minute];
+    
+    NSLog(@"hour: %ld, minute: %ld", (long)hourNow, (long)minuteNow);
+    
     NSString *resultString = [dateFormatter stringFromDate: currentTime];
     float currentTimeFloat = [resultString floatValue]; // current hour
 
@@ -51,8 +59,9 @@
     //CGFloat increment = position/maxPosition;
     //NSInteger hour = increment*24;
     
-    CGFloat initialPosition = currentTimeFloat * maxPosition / 24.0; // not correct
-    NSLog(@"initial position: %f, time: %f", maxPosition, currentTimeFloat);
+    //CGFloat initialPosition = currentTimeFloat * maxPosition / 24.0;
+    CGFloat initialPosition = ((hourNow * 60.0) + minuteNow) * maxPosition / 1440.0;
+    NSLog(@"initial position: %f, time: %f", initialPosition, currentTimeFloat);
     
     [self.scrollView setContentOffset:CGPointMake(initialPosition, 0)];
 }
@@ -243,10 +252,12 @@
     CGFloat position = scrollView.contentOffset.x;
     CGFloat increment = position/maxPosition;
     NSInteger hour = increment*24;
+    NSInteger minute = increment*1440-(hour*60);
     
-    self.yourTime.text = [NSString stringWithFormat:@"%ld:00", (long)hour]; // something wrong with this
+    // Reference to keep leading zero: http://stackoverflow.com/questions/10790925/xcode-iphone-sdk-keep-nsinteger-zero-at-beginning
+    self.yourTime.text = [NSString stringWithFormat:@"%ld:%02ld", (long)hour, (long)minute]; // something wrong with this (hour)
     
-    NSLog(@"Position: %f, increment: %f, hour: %ld", position, increment, (long)hour);
+    NSLog(@"Position: %f, increment: %f, hour: %ld, minute: %ld", position, increment, (long)hour, (long)minute);
 }
 
 @end
