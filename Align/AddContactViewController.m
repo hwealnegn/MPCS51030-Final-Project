@@ -55,9 +55,45 @@
          NSLog(@"%@", timeZoneNames[i]);
          }*/
         
+        // Trying out a different method
+        // Reference: http://stackoverflow.com/questions/5646539/iphonefind-the-current-timezone-offset-in-hours
+        NSTimeZone *destinationTimeZone = [NSTimeZone systemTimeZone];
+        float timeZoneOffset = [destinationTimeZone secondsFromGMT] / 3600.0;
+        NSLog(@"Time zone offset: %f", timeZoneOffset);
         
+        NSLog(@"FIRST VIEW DID LOAD");
         
-        
+        NSArray *timeZoneNames = [NSTimeZone knownTimeZoneNames];
+        for (int i=0; i<[timeZoneNames count]; i++){
+            //NSLog(@"%@", timeZoneNames[i]);
+            
+            // Get city name
+            NSString *zone = timeZoneNames[i];
+            NSString *city;
+            NSRange range = [zone rangeOfString:@"/" options:NSBackwardsSearch];
+            if (range.location != NSNotFound) {
+                city = [zone substringFromIndex:range.location+1];
+            } else {
+                city = zone;
+            }
+            
+            NSLog(@"%@", city);
+            
+            NSString *contactCity = [self.locationField.text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+            if ([contactCity isEqualToString:city]) {
+                NSTimeZone *contactTimeZone = [NSTimeZone timeZoneWithName:zone];
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setTimeZone:contactTimeZone];
+
+                float contactTZOffset = [contactTimeZone secondsFromGMT] / 3600.0;
+                NSLog(@"Time where contact is: %f", contactTZOffset-timeZoneOffset);
+                    
+                float timeDifference = contactTZOffset-timeZoneOffset;
+                NSString *diffAsStr = [NSString stringWithFormat:@"%f", timeDifference];
+                    
+                self.contact.time = diffAsStr;
+            }
+        }
         
         // Save information to NSUserDefaults
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

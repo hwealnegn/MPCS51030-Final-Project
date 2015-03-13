@@ -52,11 +52,9 @@
     // Reference: http://stackoverflow.com/questions/8385132/get-current-time-on-the-iphone-in-a-chosen-format
     NSDate *currentTime = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"hh:mm"];
+    [dateFormatter setDateFormat:@"HH:mm"];
      NSString *resultString = [dateFormatter stringFromDate: currentTime];
     self.yourTime.text = resultString;
-    long long msSelf = [currentTime timeIntervalSinceNow]/3600;
-    NSLog(@"Current milliseconds: %lld", msSelf);
     
     // Trying out a different method
     // Reference: http://stackoverflow.com/questions/5646539/iphonefind-the-current-timezone-offset-in-hours
@@ -223,8 +221,36 @@
     
     // Configure cell here!
     cell.contactName.text = contact.name;
-    cell.contactTime.text = contact.time;
+    //cell.contactTime.text = contact.time;
     cell.contactLocation.text = contact.location;
+    
+    // Contact's time should be displaced from value at yourTime label
+    NSString *currentTime = self.yourTime.text;
+    NSString *minutes;
+    NSString *hours;
+    
+    float currentTimeFloat = [currentTime floatValue];
+    float contactTimeFloat = [contact.time floatValue];
+    float timeDifference = contactTimeFloat + currentTimeFloat;
+    if (timeDifference >= 24.0) {
+        timeDifference = timeDifference - 24.0;
+    }
+    NSLog(@"Current time: %f, Contact time: %f", currentTimeFloat, contactTimeFloat);
+    NSLog(@"Time difference: %f", timeDifference);
+    
+    NSRange range = [currentTime rangeOfString:@":" options:NSBackwardsSearch]; // minutes
+    if (range.location != NSNotFound) {
+        //hours = [currentTime substringToIndex:range.location];
+        hours = [NSString stringWithFormat:@"%d", (int)timeDifference];
+        // Take the difference from the hours
+        
+        minutes = [currentTime substringFromIndex:range.location+1];
+    }
+    
+    //NSString *diffAsStr = [NSString stringWithFormat:@"%f", timeDifference];
+    NSString *diffAsStr = [NSString stringWithFormat:@"%@:%@", hours, minutes];
+    NSLog(@"Test: %@:%@ -- %@", hours, minutes, diffAsStr);
+    cell.contactTime.text = diffAsStr;
     
     //NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
     
