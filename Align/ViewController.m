@@ -255,7 +255,7 @@
     NSInteger minute = increment*1440-(hour*60);
     
     // Reference to keep leading zero: http://stackoverflow.com/questions/10790925/xcode-iphone-sdk-keep-nsinteger-zero-at-beginning
-    self.yourTime.text = [NSString stringWithFormat:@"%ld:%02ld", (long)hour, (long)minute]; // something wrong with this (hour)
+    self.yourTime.text = [NSString stringWithFormat:@"%ld:%02ld", (long)hour, (long)minute]; // something wrong with this
     
     NSLog(@"Position: %f, increment: %f, hour: %ld, minute: %ld", position, increment, (long)hour, (long)minute);
 }

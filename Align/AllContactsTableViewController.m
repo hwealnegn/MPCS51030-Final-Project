@@ -100,7 +100,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell" forIndexPath:indexPath];
-    
     Contact *contact = [self.contacts objectAtIndex:indexPath.row];
     
     // Configure cell here!
@@ -109,18 +108,20 @@
     
     NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
     
-    /*if (contact.selected) {
-        cell.selected = YES;
+    if (contact.selected) {
+        //cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        cell.backgroundColor = [UIColor colorWithRed:0.15 green:0.1 blue:0.1 alpha:0.25];
     } else {
-        cell.selected = NO;
-    }*/
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.backgroundColor = [UIColor whiteColor];
+    }
 
     return cell;
 }
 
 - (void) tableView: (UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"Selected! %ld", (long)indexPath.row);
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     // Toggle 'selected' boolean
     Contact *tappedContact = [self.contacts objectAtIndex:indexPath.row];
     tappedContact.selected = !tappedContact.selected;
@@ -139,64 +140,9 @@
     // Update defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:self.contactSelections forKey:@"contactSelections"];
+    [defaults synchronize];
     
-    // Update NSUserDefaults -- NOTE: SOME ISSUES HERE WITH UPDATING/ARRAY (both local and defaults)
-    // Attempt from 3/11 (Wednesday)
-    /*NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"contactSelections"] != nil) {
-        NSLog(@"Updating selection array at %ld", (long)indexPath.row);
-        NSNumber *boolean = [NSNumber numberWithBool:tappedContact.selected];
-        //[self.contactSelections addObjectsFromArray:[defaults objectForKey:@"contactSelections"]]; // get selections array
-        
-        NSLog(@"Size of contactSelections array: %lu", [self.contactSelections count]);
-        
-        self.contactSelections[indexPath.row] = boolean; // update selections array at specified index (i.e. selected row)
-        [defaults setObject:self.contactSelections forKey:@"contactSelections"]; // save updated array to defaults
-    } else {
-        NSLog(@"Contact selection booleans were not initialized/stored.");
-    }*/
-    // End of 3/11 attempt
-    
-    // Toggle bool for whether contact has been selected or not
-    /*[tableView deselectRowAtIndexPath:indexPath animated:NO];
-    Contact *tappedContact = [self.contacts objectAtIndex:indexPath.row];
-    tappedContact.selected = !tappedContact.selected;
-    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];*/
-    
-    
-    // Keep track of selected contacts -- DOES NOT WORK PROPERLY
-    /*NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    if ([defaults objectForKey:@"selectedContacts"] != nil) {
-        NSLog(@"There's something");
-        
-        NSInteger exists = 0;
-        
-        [self.selectedContacts addObjectsFromArray:[defaults objectForKey:@"selectedContacts"]];
-        
-        // Check if contact is already in array (NOTE: NEED TO UPDATE THIS!)
-        for (NSString *name in self.selectedContacts){
-            if ([name isEqualToString:[self.contactNames objectAtIndex:indexPath.row]]) { // contact already saved
-                exists = 1;
-                break;
-            }
-        }
-        
-        // If contact is not found
-        if (exists == 0) {
-            [self.selectedContacts addObject:[self.contactNames objectAtIndex:indexPath.row]]; // add new contact
-            [defaults setObject:self.selectedContacts forKey:@"selectedContacts"]; // save updated array to defaults
-        }
-        
-    } else {
-        NSLog(@"Initialize name array in NSUserDefaults");
-        NSLog(@"Name: %@", [self.contactNames objectAtIndex:indexPath.row]);
-        [self.selectedContacts addObject:[self.contactNames objectAtIndex:indexPath.row]]; // add contact to array
-        
-        [defaults setObject:self.selectedContacts forKey:@"selectedContacts"]; // save array in defaults
-    }
-    NSLog(@"size: %lu", (unsigned long)[self.selectedContacts count]);
-    [defaults synchronize];*/
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 /*
