@@ -77,7 +77,21 @@
     
     [self loadInitialData];
     
+    // Initialize scroll view
     [self.scrollView setContentSize:CGSizeMake(1200, 90)];
+    
+    // Set background image
+    // Reference for making navigation bar transparent: http://stackoverflow.com/questions/2315862/make-uinavigationbar-transparent
+    self.selectContacts.backgroundColor = [UIColor clearColor];
+    self.scrollImage.backgroundColor = [UIColor clearColor];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                             forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [imageView setImage:[UIImage imageNamed:@"daySky"]];
+    [self.view addSubview:imageView];
+    [self.view sendSubviewToBack:imageView];
     
     // Set your time as current time
     // Reference: http://stackoverflow.com/questions/8385132/get-current-time-on-the-iphone-in-a-chosen-format
@@ -87,6 +101,7 @@
      NSString *resultString = [dateFormatter stringFromDate: currentTime];
     NSLog(@"RESULT STRING: %@", resultString);
     self.yourTime.text = resultString;
+    self.yourTime.textColor = [UIColor whiteColor];
     
     // Calculate time differences
     // Reference: http://stackoverflow.com/questions/5646539/iphonefind-the-current-timezone-offset-in-hours
@@ -236,6 +251,11 @@
     
     //NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
     NSLog(@"time float: %f", currentTimeFloat);
+    
+    cell.backgroundColor = [UIColor clearColor];
+    cell.contactName.textColor = [UIColor whiteColor];
+    cell.contactLocation.textColor = [UIColor whiteColor];
+    cell.contactTime.textColor = [UIColor whiteColor];
     
     return cell;
 }

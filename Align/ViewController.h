@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *selectContacts;
 @property (weak, nonatomic) IBOutlet UILabel *yourTime;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIScrollView *bottomScroll;
 @property (weak, nonatomic) IBOutlet UIImageView *scrollImage;
 
 - (IBAction)unwindToList:(UIStoryboardSegue *)segue;

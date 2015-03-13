@@ -55,6 +55,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="rYg-yo-mgq" firstAttribute="top" secondItem="tUA-fG-uXT" secondAttribute="topMargin" constant="15" id="12h-5e-FBh"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="ne9-OW-iq2" secondAttribute="bottom" id="4C4-KS-VJD"/>
@@ -74,6 +75,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="contactLocation" destination="ne9-OW-iq2" id="Zga-s2-fPV"/>
                                             <outlet property="contactName" destination="rYg-yo-mgq" id="s3w-cQ-0OP"/>
@@ -95,10 +97,10 @@
                                 <rect key="frame" x="0.0" y="510" width="600" height="90"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scrollWave" translatesAutoresizingMaskIntoConstraints="NO" id="hlY-cM-cp9">
-                                        <rect key="frame" x="0.0" y="0.0" width="1200" height="90"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1199" height="90"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.37246973432789987" green="0.79752604166666663" blue="0.20076652956363963" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="90" id="5YR-hh-o18"/>
                                     <constraint firstItem="hlY-cM-cp9" firstAttribute="top" secondItem="lX0-Sy-hxI" secondAttribute="top" id="Dfg-Sg-LA9"/>
@@ -151,8 +153,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="bottomScroll" destination="lX0-Sy-hxI" id="So2-GF-10e"/>
                         <outlet property="scrollImage" destination="hlY-cM-cp9" id="eRy-3A-sw1"/>
-                        <outlet property="scrollView" destination="lX0-Sy-hxI" id="61b-xj-3BB"/>
                         <outlet property="selectContacts" destination="JMT-zJ-aEj" id="VnH-2Y-zGc"/>
                         <outlet property="yourTime" destination="Zvj-h6-rIf" id="ben-Xj-us9"/>
                     </connections>
@@ -279,23 +281,15 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="add new contact" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IBj-fN-zUV">
-                                <rect key="frame" x="236" y="235" width="129" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="hdn-BD-eh5" firstAttribute="top" secondItem="o1t-C8-1T0" secondAttribute="bottom" constant="8" id="1ZV-gO-KEp"/>
                             <constraint firstItem="hdn-BD-eh5" firstAttribute="leading" secondItem="845-UM-7bq" secondAttribute="leadingMargin" id="50r-MZ-kG7"/>
                             <constraint firstItem="o1t-C8-1T0" firstAttribute="trailing" secondItem="845-UM-7bq" secondAttribute="trailingMargin" id="7vZ-xc-z63"/>
-                            <constraint firstItem="o1t-C8-1T0" firstAttribute="top" secondItem="IBj-fN-zUV" secondAttribute="bottom" constant="8" id="ADp-pz-kWi"/>
                             <constraint firstItem="hdn-BD-eh5" firstAttribute="trailing" secondItem="845-UM-7bq" secondAttribute="trailingMargin" id="Irc-3B-Kbs"/>
                             <constraint firstItem="o1t-C8-1T0" firstAttribute="top" secondItem="8EW-9o-6gM" secondAttribute="bottom" constant="200" id="NMP-rc-oTZ"/>
                             <constraint firstAttribute="centerY" secondItem="o1t-C8-1T0" secondAttribute="centerY" id="NZf-ze-LJL"/>
-                            <constraint firstAttribute="centerX" secondItem="IBj-fN-zUV" secondAttribute="centerX" id="VXj-Vp-ux5"/>
                             <constraint firstItem="o1t-C8-1T0" firstAttribute="top" secondItem="8EW-9o-6gM" secondAttribute="bottom" constant="200" id="aHW-IF-8cK"/>
                             <constraint firstItem="o1t-C8-1T0" firstAttribute="leading" secondItem="845-UM-7bq" secondAttribute="leadingMargin" id="kW0-kH-h5z"/>
                             <constraint firstItem="hdn-BD-eh5" firstAttribute="top" secondItem="o1t-C8-1T0" secondAttribute="bottom" constant="6" id="oTA-Ml-keU"/>
@@ -396,6 +390,6 @@
         <image name="Clock-100" width="100" height="100"/>
         <image name="Meeting-100" width="100" height="100"/>
         <image name="Settings-100" width="100" height="100"/>
-        <image name="scrollWave" width="1200" height="90"/>
+        <image name="scrollWave" width="1199" height="90"/>
     </resources>
 </document>
