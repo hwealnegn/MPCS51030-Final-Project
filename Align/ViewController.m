@@ -32,6 +32,11 @@
     [self.selectContacts reloadData];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.selectContacts reloadData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.contacts = [[NSMutableArray alloc] init];
@@ -39,6 +44,7 @@
     self.contactLocations = [[NSMutableArray alloc] init];
     self.contactSelections = [[NSMutableArray alloc] init];
     self.contactTimes = [[NSMutableArray alloc] init];
+    self.selectedContacts = [[NSMutableArray alloc] init];
     
     [self loadInitialData];
     
@@ -54,7 +60,7 @@
     
     NSArray *timeZoneNames = [NSTimeZone knownTimeZoneNames];
     for (int i=0; i<[timeZoneNames count]; i++){
-        NSLog(@"%@", timeZoneNames[i]);
+        //NSLog(@"%@", timeZoneNames[i]);
         
         // get city name
         NSString *zone = timeZoneNames[i];
@@ -66,7 +72,7 @@
             city = zone;
         }
         
-        NSLog(@"%@", city);
+        //NSLog(@"%@", city);
     }
     
     NSLog(@"Time in Taipei: %@", [NSTimeZone timeZoneWithName:@"Asia/Taipei"]);
@@ -136,6 +142,18 @@
         }
     }
     
+    for (int i=0; i<[self.contacts count]; i++) {
+        
+        BOOL isSelected = [[self.contactSelections objectAtIndex:i] boolValue];
+        NSLog(@"Is selected? %d", isSelected);
+        
+        if (isSelected) {
+            [self.selectedContacts addObject:self.contacts[i]];
+        }
+    }
+    
+    NSLog(@"Number of selected contacts: %lu", (unsigned long)[self.selectedContacts count]);
+    
     /*Contact *contact1 = [[Contact alloc] init];
     contact1.name = @"Mom";
     contact1.time = @"12:00";
@@ -167,12 +185,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.contacts count];
+    return [self.selectedContacts count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell" forIndexPath:indexPath];
-    Contact *contact = [self.contacts objectAtIndex:indexPath.row];
+    Contact *contact = [self.selectedContacts objectAtIndex:indexPath.row]; // only show selected contacts
     
     // Configure cell here!
     cell.contactName.text = contact.name;
