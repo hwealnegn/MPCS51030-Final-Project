@@ -106,6 +106,9 @@
                                     <constraint firstAttribute="trailing" secondItem="hlY-cM-cp9" secondAttribute="trailing" id="ZhB-HR-xb6"/>
                                     <constraint firstItem="hlY-cM-cp9" firstAttribute="leading" secondItem="lX0-Sy-hxI" secondAttribute="leading" id="qUv-5e-pzv"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="M6v-qG-bJK"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -148,6 +151,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="scrollImage" destination="hlY-cM-cp9" id="eRy-3A-sw1"/>
+                        <outlet property="scrollView" destination="lX0-Sy-hxI" id="61b-xj-3BB"/>
                         <outlet property="selectContacts" destination="JMT-zJ-aEj" id="VnH-2Y-zGc"/>
                         <outlet property="yourTime" destination="Zvj-h6-rIf" id="ben-Xj-us9"/>
                     </connections>

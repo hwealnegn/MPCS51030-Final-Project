@@ -35,6 +35,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.selectContacts reloadData];
+    [self.scrollView addSubview:self.scrollImage];
 }
 
 - (void)viewDidLoad {
@@ -47,6 +48,8 @@
     self.selectedContacts = [[NSMutableArray alloc] init];
     
     [self loadInitialData];
+    
+    [self.scrollView setContentSize:CGSizeMake(1200, 90)];
     
     // Set your time as current time
     // Reference: http://stackoverflow.com/questions/8385132/get-current-time-on-the-iphone-in-a-chosen-format
@@ -78,7 +81,7 @@
             city = zone;
         }
         
-        NSLog(@"%@", city);
+        //NSLog(@"%@", city);
         
         for (int j=0; j<[self.contacts count]; j++) {
             NSString *contactCity = self.contactLocations[j];
@@ -203,6 +206,24 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
+}
+
+#pragma mark - Scroll View
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat pageCount = 0;
+    NSInteger pageCountInt = 0;
+    NSInteger pageWidth = scrollView.frame.size.width;
+    CGFloat pageMove = scrollView.contentOffset.x/pageWidth;
+    CGFloat position = scrollView.contentOffset.x;
+    
+    if (pageMove != pageCount || pageCount == 0){
+        pageCount = scrollView.contentOffset.x/pageWidth;
+        pageCountInt = roundf(pageCount); // float to int
+        //[self.label setText:[self.mixedArray[pageCountInt] name]]; // set label
+    }
+    
+    NSLog(@"Position: %f", position);
 }
 
 @end
