@@ -63,7 +63,7 @@
     CGFloat initialPosition = ((hourNow * 60.0) + minuteNow) * maxPosition / 1440.0;
     NSLog(@"initial position: %f, time: %f", initialPosition, currentTimeFloat);
     
-    [self.scrollView setContentOffset:CGPointMake(initialPosition, 0)];
+    [self.bottomScroll setContentOffset:CGPointMake(initialPosition, 0)];
 }
 
 - (void)viewDidLoad {
@@ -88,10 +88,17 @@
                              forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = YES;
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [imageView setImage:[UIImage imageNamed:@"daySky"]];
-    [self.view addSubview:imageView];
-    [self.view sendSubviewToBack:imageView];
+    
+    // Initialize day/night sky backgrounds
+    self.dayView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.dayView setImage:[UIImage imageNamed:@"daySky"]];
+    [self.view addSubview:self.dayView];
+    [self.view sendSubviewToBack:self.dayView];
+    
+    self.nightView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.nightView setImage:[UIImage imageNamed:@"nightSky"]];
+    [self.view addSubview:self.nightView];
+    [self.view sendSubviewToBack:self.nightView];
     
     // Set your time as current time
     // Reference: http://stackoverflow.com/questions/8385132/get-current-time-on-the-iphone-in-a-chosen-format
@@ -269,6 +276,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     NSInteger pageWidth = scrollView.frame.size.width;
     CGFloat maxPosition = 1200.0 - pageWidth;
+    CGFloat midPosition = maxPosition / 2.0;
     CGFloat position = scrollView.contentOffset.x;
     CGFloat increment = position/maxPosition;
     NSInteger hour = increment*24;
@@ -278,6 +286,15 @@
     self.yourTime.text = [NSString stringWithFormat:@"%ld:%02ld", (long)hour, (long)minute]; // something wrong with this
     
     NSLog(@"Position: %f, increment: %f, hour: %ld, minute: %ld", position, increment, (long)hour, (long)minute);
+    
+    // Set alpha values of sky relative to position of scroll view
+    if (position < maxPosition/2.0) {
+        self.dayView.alpha = position/midPosition;
+        self.nightView.alpha = 1 - position/midPosition;
+    } else {
+        self.dayView.alpha = (maxPosition - position)/midPosition;
+        self.nightView.alpha = 1 - (maxPosition - position)/midPosition;
+    }
 }
 
 @end

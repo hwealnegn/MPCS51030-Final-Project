@@ -16,6 +16,9 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *bottomScroll;
 @property (weak, nonatomic) IBOutlet UIImageView *scrollImage;
 
+@property (strong, nonatomic) IBOutlet UIImageView *dayView;
+@property (strong, nonatomic) IBOutlet UIImageView *nightView;
+
 - (IBAction)unwindToList:(UIStoryboardSegue *)segue;
 
 @property (strong, nonatomic) NSMutableArray *contactNames;
