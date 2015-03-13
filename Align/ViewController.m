@@ -36,6 +36,25 @@
     [super viewWillAppear:animated];
     [self.selectContacts reloadData];
     [self.scrollView addSubview:self.scrollImage];
+    
+    // Initialize scroll view at current hour's time
+    NSDate *currentTime = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:mm"];
+    NSString *resultString = [dateFormatter stringFromDate: currentTime];
+    float currentTimeFloat = [resultString floatValue]; // current hour
+
+    
+    NSInteger pageWidth = self.view.frame.size.width;
+    CGFloat maxPosition = 1200.0 - pageWidth;
+    //CGFloat position = self.scrollView.contentOffset.x;
+    //CGFloat increment = position/maxPosition;
+    //NSInteger hour = increment*24;
+    
+    CGFloat initialPosition = currentTimeFloat * maxPosition / 24.0; // not correct
+    NSLog(@"initial position: %f, time: %f", maxPosition, currentTimeFloat);
+    
+    [self.scrollView setContentOffset:CGPointMake(initialPosition, 0)];
 }
 
 - (void)viewDidLoad {
@@ -57,6 +76,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"HH:mm"];
      NSString *resultString = [dateFormatter stringFromDate: currentTime];
+    NSLog(@"RESULT STRING: %@", resultString);
     self.yourTime.text = resultString;
     
     // Calculate time differences
@@ -176,7 +196,13 @@
     cell.contactLocation.text = contact.location;
     
     // Contact's time should be displaced from value at yourTime label
-    NSString *currentTime = self.yourTime.text;
+    NSDate *currentTimeDate = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:mm"];
+    NSString *resultString = [dateFormatter stringFromDate: currentTimeDate];
+    NSString *currentTime = resultString;
+    //NSString *currentTime = self.yourTime.text;
+    NSLog(@"Current time?? %@", currentTime);
     NSString *minutes;
     NSString *hours;
     
@@ -200,6 +226,7 @@
     cell.contactTime.text = diffAsStr;
     
     //NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
+    NSLog(@"time float: %f", currentTimeFloat);
     
     return cell;
 }
@@ -211,19 +238,15 @@
 #pragma mark - Scroll View
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat pageCount = 0;
-    NSInteger pageCountInt = 0;
     NSInteger pageWidth = scrollView.frame.size.width;
-    CGFloat pageMove = scrollView.contentOffset.x/pageWidth;
+    CGFloat maxPosition = 1200.0 - pageWidth;
     CGFloat position = scrollView.contentOffset.x;
+    CGFloat increment = position/maxPosition;
+    NSInteger hour = increment*24;
     
-    if (pageMove != pageCount || pageCount == 0){
-        pageCount = scrollView.contentOffset.x/pageWidth;
-        pageCountInt = roundf(pageCount); // float to int
-        //[self.label setText:[self.mixedArray[pageCountInt] name]]; // set label
-    }
+    self.yourTime.text = [NSString stringWithFormat:@"%ld:00", (long)hour]; // something wrong with this
     
-    NSLog(@"Position: %f", position);
+    NSLog(@"Position: %f, increment: %f, hour: %ld", position, increment, (long)hour);
 }
 
 @end
