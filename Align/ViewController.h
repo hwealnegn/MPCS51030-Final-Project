@@ -29,5 +29,8 @@
 
 @property (strong, nonatomic) NSMutableArray *selectedContacts;
 
+@property NSInteger dynamicHour;
+@property NSInteger dynamicMinute;
+
 @end
 

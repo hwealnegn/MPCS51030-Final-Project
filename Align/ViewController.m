@@ -70,11 +70,7 @@
     }
     
     for (int i=0; i<[self.contacts count]; i++) {
-        
         BOOL isSelected = [[self.contactSelections objectAtIndex:i] boolValue];
-        NSLog(@"*****Is selected? %d", isSelected);
-        
-        
         if (isSelected) {
             [self.selectedContacts addObject:self.contacts[i]];
         }
@@ -106,6 +102,11 @@
     NSDateComponents *components = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute fromDate:currentTime];
     NSInteger hourNow = [components hour];
     NSInteger minuteNow = [components minute];
+    
+    self.dynamicHour = hourNow;
+    self.dynamicMinute = minuteNow;
+    
+    NSLog(@"HELLOLOLO %ld, %ld", (long)self.dynamicHour, (long)self.dynamicMinute);
     
     //NSLog(@"hour: %ld, minute: %ld", (long)hourNow, (long)minuteNow);
     
@@ -264,10 +265,7 @@
     }
     
     for (int i=0; i<[self.contacts count]; i++) {
-        
         BOOL isSelected = [[self.contactSelections objectAtIndex:i] boolValue];
-        NSLog(@"Is selected? %d", isSelected);
-        
         if (isSelected) {
             [self.selectedContacts addObject:self.contacts[i]];
         }
@@ -357,7 +355,7 @@
     NSInteger minute = increment*1440-(hour*60);
     
     // Reference to keep leading zero: http://stackoverflow.com/questions/10790925/xcode-iphone-sdk-keep-nsinteger-zero-at-beginning
-    self.yourTime.text = [NSString stringWithFormat:@"%ld:%02ld", (long)hour, (long)minute]; // something wrong with this
+    self.yourTime.text = [NSString stringWithFormat:@"%ld:%02ld", (long)hour, (long)minute];
     
     //NSLog(@"Position: %f, increment: %f, hour: %ld, minute: %ld", position, increment, (long)hour, (long)minute);
     
@@ -379,9 +377,41 @@
         self.nightView.alpha = (position - threeQuarterPosition)/(maxPosition-threeQuarterPosition);
     }
     
-    NSLog(@"Day: %f, Sun: %f, Night: %f", self.dayView.alpha, self.sunView.alpha, self.nightView.alpha);
+    //NSLog(@"Day: %f, Sun: %f, Night: %f", self.dayView.alpha, self.sunView.alpha, self.nightView.alpha);
     
-    // Save alpha values for other view controllers
+    self.dynamicHour = hour;
+    self.dynamicMinute = minute;
+    
+    NSLog(@"**HOUR: %ld, MINUTE: %ld", self.dynamicHour, self.dynamicMinute);
+    
+    // Update times in table view (attempt #1)
+    /*for (int i=0; i<[self.selectedContacts count]; i++) {
+        NSIndexPath *path = [NSIndexPath indexPathForRow:i inSection:0];
+        ContactTableViewCell *cell = [self.selectContacts cellForRowAtIndexPath:path];
+        Contact *contact = [self.selectedContacts objectAtIndex:i]; // only show selected contacts
+        
+        NSString *contactMinutes;
+        NSString *contactHours;
+        
+        float currentTimeFloat = hour;
+        float contactTimeFloat = [contact.time floatValue];
+        float timeDifference = contactTimeFloat + currentTimeFloat;
+        if (timeDifference >= 24.0) {
+            timeDifference = timeDifference - 24.0;
+        }
+        //NSLog(@"Current time: %f, Contact time: %f", currentTimeFloat, contactTimeFloat);
+        //NSLog(@"Time difference: %f", timeDifference);
+
+        contactHours = [NSString stringWithFormat:@"%d", (int)timeDifference];
+        contactMinutes = [NSString stringWithFormat:@"%ld", (long)minute];
+        
+        NSString *diffAsStr = [NSString stringWithFormat:@"%@:%@", contactHours, contactMinutes];
+        NSLog(@"Is this working? %@", diffAsStr);
+        cell.contactTime.text = diffAsStr;
+        [self.selectContacts reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+        
+        NSLog(@"CONTACT TIME? %@:%@", contactHours, contactMinutes);
+    }*/
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
