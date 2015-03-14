@@ -35,8 +35,50 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.selectContacts reloadData];
+    //[self loadInitialData];
+    //[self.selectContacts reloadData];
     NSLog(@"VIEW APPEARED!!!!!!!");
+    NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+    
+    // Empty arrays
+    [self.contacts removeAllObjects];
+    [self.contactSelections removeAllObjects];
+    [self.contactNames removeAllObjects];
+    [self.contactLocations removeAllObjects];
+    [self.contactTimes removeAllObjects];
+    [self.selectedContacts removeAllObjects];
+    
+    // Use defaults to repopulate contactSelections
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [self.contactSelections addObjectsFromArray:[defaults objectForKey:@"contactSelections"]];
+    [self.contactNames addObjectsFromArray:[defaults objectForKey:@"contactNames"]];
+    [self.contactLocations addObjectsFromArray:[defaults objectForKey:@"contactLocations"]];
+    [self.contactTimes addObjectsFromArray:[defaults objectForKey:@"contactTimes"]];
+    
+    if (self.contactNames != nil) {
+        for (int i=0; i<[self.contactNames count]; i++){
+            Contact *addContact = [[Contact alloc] init];
+            addContact.name = self.contactNames[i];
+            addContact.location = self.contactLocations[i];
+            BOOL b = [[self.contactSelections objectAtIndex:i] boolValue]; // convert back to bool
+            addContact.selected = b;
+            addContact.time = self.contactTimes[i];
+            
+            [self.contacts addObject:addContact];
+        }
+    }
+    
+    for (int i=0; i<[self.contacts count]; i++) {
+        
+        BOOL isSelected = [[self.contactSelections objectAtIndex:i] boolValue];
+        NSLog(@"*****Is selected? %d", isSelected);
+        
+        
+        if (isSelected) {
+            [self.selectedContacts addObject:self.contacts[i]];
+        }
+    }
 }
 
 - (void)viewDidLoad {
@@ -65,10 +107,10 @@
     NSInteger hourNow = [components hour];
     NSInteger minuteNow = [components minute];
     
-    NSLog(@"hour: %ld, minute: %ld", (long)hourNow, (long)minuteNow);
+    //NSLog(@"hour: %ld, minute: %ld", (long)hourNow, (long)minuteNow);
     
     NSString *resultString = [dateFormatter stringFromDate: currentTime];
-    float currentTimeFloat = [resultString floatValue]; // current hour
+    //float currentTimeFloat = [resultString floatValue]; // current hour
     
     NSInteger pageWidth = self.view.frame.size.width;
     CGFloat maxPosition = 1200.0 - pageWidth;
@@ -77,7 +119,7 @@
     CGFloat threeQuarterPosition = 0.75 * maxPosition;
 
     CGFloat initialPosition = ((hourNow * 60.0) + minuteNow) * maxPosition / 1440.0;
-    NSLog(@"initial position: %f, time: %f", initialPosition, currentTimeFloat);
+    //NSLog(@"initial position: %f, time: %f", initialPosition, currentTimeFloat);
     
     // Set initial scroll view position
     [self.bottomScroll setContentOffset:CGPointMake(initialPosition, 0)];
@@ -190,12 +232,9 @@
     for (int i=0; i<[self.contacts count]; i++) {
         NSLog(@"Contact: %@, time: %@, location: %@", self.contactNames[i], self.contactTimes[i], self.contactLocations[i]);
     }
-    
-    NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 }
 
 - (void)loadInitialData {
-    
     // Load data from NSUserDefaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"contactNames"] != nil) {
@@ -266,8 +305,7 @@
     [dateFormatter setDateFormat:@"HH:mm"];
     NSString *resultString = [dateFormatter stringFromDate: currentTimeDate];
     NSString *currentTime = resultString;
-    //NSString *currentTime = self.yourTime.text;
-    NSLog(@"Current time?? %@", currentTime);
+    //NSLog(@"Current time?? %@", currentTime);
     NSString *minutes;
     NSString *hours;
     
@@ -277,8 +315,8 @@
     if (timeDifference >= 24.0) {
         timeDifference = timeDifference - 24.0;
     }
-    NSLog(@"Current time: %f, Contact time: %f", currentTimeFloat, contactTimeFloat);
-    NSLog(@"Time difference: %f", timeDifference);
+    //NSLog(@"Current time: %f, Contact time: %f", currentTimeFloat, contactTimeFloat);
+    //NSLog(@"Time difference: %f", timeDifference);
     
     NSRange range = [currentTime rangeOfString:@":" options:NSBackwardsSearch]; // minutes
     if (range.location != NSNotFound) {
@@ -287,11 +325,11 @@
     }
     
     NSString *diffAsStr = [NSString stringWithFormat:@"%@:%@", hours, minutes];
-    NSLog(@"Test: %@:%@ -- %@", hours, minutes, diffAsStr);
+    //NSLog(@"Test: %@:%@ -- %@", hours, minutes, diffAsStr);
     cell.contactTime.text = diffAsStr;
     
     //NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
-    NSLog(@"time float: %f", currentTimeFloat);
+    //NSLog(@"time float: %f", currentTimeFloat);
     
     cell.backgroundColor = [UIColor clearColor];
     cell.contactName.textColor = [UIColor whiteColor];
