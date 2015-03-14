@@ -26,6 +26,29 @@
     self.contactLocations = [[NSMutableArray alloc] init];
     self.contactTimeDifferences = [[NSMutableArray alloc] init];
     self.contactSelections = [[NSMutableArray alloc] init];
+    
+    // Reference for making navigation bar transparent: http://stackoverflow.com/questions/2315862/make-uinavigationbar-transparent
+    //self.view.backgroundColor = [UIColor clearColor];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    
+    // Initialize day/night sky backgrounds
+    self.dayView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.dayView setImage:[UIImage imageNamed:@"daySky"]];
+    [self.view addSubview:self.dayView];
+    [self.view sendSubviewToBack:self.dayView];
+    
+    self.sunView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.sunView setImage:[UIImage imageNamed:@"sunSky"]];
+    [self.view addSubview:self.sunView];
+    [self.view sendSubviewToBack:self.sunView];
+    
+    self.nightView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.nightView setImage:[UIImage imageNamed:@"nightSky"]];
+    [self.view addSubview:self.nightView];
+    [self.view sendSubviewToBack:self.nightView];
 }
 
 - (void)didReceiveMemoryWarning {

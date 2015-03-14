@@ -331,6 +331,18 @@
     }
     
     NSLog(@"Day: %f, Sun: %f, Night: %f", self.dayView.alpha, self.sunView.alpha, self.nightView.alpha);
+    
+    // Save alpha values for other view controllers
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"toAllContactsSegue"]){
+        UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
+        AllContactsTableViewController *controller = (AllContactsTableViewController *)navController.topViewController;
+        controller.dayAlpha = self.dayView.alpha;
+        controller.sunAlpha = self.sunView.alpha;
+        controller.nightAlpha = self.nightView.alpha;
+    }
 }
 
 @end

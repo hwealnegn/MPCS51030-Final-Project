@@ -46,7 +46,32 @@
     
     NSLog(@"Size of contactNames: %lu, contacts: %lu, contactSelections: %lu", (unsigned long)[self.contactNames count], (unsigned long)[self.contacts count], (unsigned long)[self.contactSelections count]);
     
-    NSLog(@"SECOND VIEW DID LOAD");
+    // Reference for making navigation bar transparent: http://stackoverflow.com/questions/2315862/make-uinavigationbar-transparent
+    self.tableView.backgroundColor = [UIColor clearColor];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    
+    // Initialize day/night sky backgrounds
+    self.dayView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.dayView setImage:[UIImage imageNamed:@"daySky"]];
+    [self.view addSubview:self.dayView];
+    [self.view sendSubviewToBack:self.dayView];
+    
+    self.sunView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.sunView setImage:[UIImage imageNamed:@"sunSky"]];
+    [self.view addSubview:self.sunView];
+    [self.view sendSubviewToBack:self.sunView];
+    
+    self.nightView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.nightView setImage:[UIImage imageNamed:@"nightSky"]];
+    [self.view addSubview:self.nightView];
+    [self.view sendSubviewToBack:self.nightView];
+    
+    self.dayView.alpha = self.dayAlpha;
+    self.sunView.alpha = self.sunAlpha;
+    self.nightView.alpha = self.nightAlpha;
 }
 
 - (void)loadInitialData {
@@ -106,14 +131,17 @@
     cell.contactName.text = contact.name;
     cell.contactLocation.text = contact.location;
     
+    cell.contactName.textColor = [UIColor whiteColor];
+    cell.contactLocation.textColor = [UIColor whiteColor];
+    
     NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
     
     if (contact.selected) {
         //cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        cell.backgroundColor = [UIColor colorWithRed:0.15 green:0.1 blue:0.1 alpha:0.25];
+        cell.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.backgroundColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor clearColor];
     }
 
     return cell;
