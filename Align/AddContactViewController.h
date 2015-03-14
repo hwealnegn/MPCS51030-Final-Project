@@ -29,4 +29,7 @@
 @property CGFloat sunAlpha;
 @property CGFloat nightAlpha;
 
+- (IBAction)addContactCheckpoint:(id)sender;
+
+
 @end

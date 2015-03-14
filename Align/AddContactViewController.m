@@ -209,4 +209,19 @@
     
 }
 
+/* Check if location is valid and if contact already exists */
+- (IBAction)addContactCheckpoint:(id)sender {
+    NSString *contactCity = [self.locationField.text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    
+    if ([self.cityNames containsObject:contactCity]) {
+        NSLog(@"Location is valid!");
+        [self addNewContact];
+    } else {
+        NSLog(@"Place: %@", contactCity);
+        NSLog(@"LOCATION DOES NOT EXIST!");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Location" message:@"We're sorry - we do not recognize this location. Please try a different one." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
 @end
