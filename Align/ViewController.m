@@ -23,13 +23,6 @@
 @implementation ViewController
 
 - (IBAction)unwindToList:(UIStoryboardSegue *)segue {
-    /*AddContactViewController *source = [segue sourceViewController];
-    Contact *contact = source.contact;
-    if (contact != nil) {
-        [self.contacts addObject:contact];
-        [self.selectContacts reloadData];
-    }*/
-
     [self.selectContacts reloadData];
 }
 
@@ -111,7 +104,6 @@
     //NSLog(@"hour: %ld, minute: %ld", (long)hourNow, (long)minuteNow);
     
     NSString *resultString = [dateFormatter stringFromDate: currentTime];
-    //float currentTimeFloat = [resultString floatValue]; // current hour
     
     NSInteger pageWidth = self.view.frame.size.width;
     CGFloat maxPosition = 1200.0 - pageWidth;
@@ -346,7 +338,7 @@
     // Reference to keep leading zero: http://stackoverflow.com/questions/10790925/xcode-iphone-sdk-keep-nsinteger-zero-at-beginning
     self.yourTime.text = [NSString stringWithFormat:@"%ld:%02ld", (long)hour, (long)minute];
     
-    //NSLog(@"Position: %f, increment: %f, pagewidth: %ld, maxpos; %f, hour: %ld, minute: %ld", position, increment, (long)pageWidth, maxPosition, (long)hour, (long)minute);
+    NSLog(@"Position: %f, increment: %f, pagewidth: %ld, maxpos; %f, hour: %ld, minute: %ld", position, increment, (long)pageWidth, maxPosition, (long)hour, (long)minute);
     
     if (position < maxPosition/4.0) { // 0 to quarterPosition
         self.dayView.alpha = 0;
@@ -371,7 +363,6 @@
     self.dynamicHour = hour;
     self.dynamicMinute = minute;
     NSLog(@"Your time text based on scroll view: %@", self.yourTime.text);
-    //NSLog(@"**hour: %f, minute: %ld", position, (long)minute);
     NSLog(@"**HOUR: %ld, MINUTE: %ld", self.dynamicHour, self.dynamicMinute);
     
     [self.selectContacts reloadData];

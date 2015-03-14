@@ -70,7 +70,7 @@
         self.contact = [[Contact alloc] init];
         self.contact.name = self.nameField.text;
         self.contact.location = self.locationField.text;
-        self.contact.time = @"3"; // need to implement logic where location is associated with time
+        self.contact.time = @"-1"; // need to implement logic where location is associated with time
         self.contact.selected = NO; // will not display on main view unless selected
         
         // Calculate time difference
@@ -111,6 +111,7 @@
             }
         }
         
+        
         // Save information to NSUserDefaults
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
@@ -133,7 +134,7 @@
                     break;
                 }
             }
-            
+            NSLog(@"Exists? %ld", (long)exists);
             // If contact is not found, create new one
             if (exists == 0) {
                 NSLog(@"Creating new contact");
@@ -151,6 +152,8 @@
                 [defaults setObject:self.contactLocations forKey:@"contactLocations"];
                 [defaults setObject:self.contactTimeDifferences forKey:@"contactTimes"];
                 [defaults setObject:self.contactSelections forKey:@"contactSelections"];
+            } else {
+                NSLog(@"DO NOT CREATE NEW CONTACT");
             }
             
         } else {
