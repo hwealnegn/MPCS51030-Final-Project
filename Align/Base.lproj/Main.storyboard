@@ -95,7 +95,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lX0-Sy-hxI">
                                 <rect key="frame" x="0.0" y="510" width="600" height="90"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scrollWave" translatesAutoresizingMaskIntoConstraints="NO" id="hlY-cM-cp9">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="waveVector" translatesAutoresizingMaskIntoConstraints="NO" id="hlY-cM-cp9">
                                         <rect key="frame" x="0.0" y="0.0" width="1200" height="90"/>
                                     </imageView>
                                 </subviews>
@@ -391,6 +391,6 @@
         <image name="Clock-100" width="100" height="100"/>
         <image name="Meeting-100" width="100" height="100"/>
         <image name="Settings-100" width="100" height="100"/>
-        <image name="scrollWave" width="1200" height="90"/>
+        <image name="waveVector" width="1200" height="90"/>
     </resources>
 </document>

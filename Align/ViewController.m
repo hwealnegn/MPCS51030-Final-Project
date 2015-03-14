@@ -130,7 +130,7 @@
     self.scrollImage.layer.shadowColor = [UIColor purpleColor].CGColor;
     self.scrollImage.layer.shadowOffset = CGSizeMake(1, 1);
     self.scrollImage.layer.shadowOpacity = 0.8f;
-    self.scrollImage.layer.shadowRadius = 4.0f;
+    self.scrollImage.layer.shadowRadius = 1.0f;
     self.scrollImage.clipsToBounds = NO;
     
     // Set background image
