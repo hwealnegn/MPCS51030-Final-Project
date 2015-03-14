@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *nightView;
 
 - (IBAction)unwindToList:(UIStoryboardSegue *)segue;
+- (IBAction)showInstructions:(id)sender;
 
 @property (strong, nonatomic) NSMutableArray *contactNames;
 @property (strong, nonatomic) NSMutableArray *contactLocations;

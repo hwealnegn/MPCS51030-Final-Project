@@ -149,6 +149,9 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="Settings-100" id="wcb-d4-vJK">
                             <inset key="imageInsets" minX="75" minY="45" maxX="5" maxY="35"/>
+                            <connections>
+                                <action selector="showInstructions:" destination="vXZ-lx-hvc" id="tye-os-wdk"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>

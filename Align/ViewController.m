@@ -26,6 +26,12 @@
     [self.selectContacts reloadData];
 }
 
+/* Display UIAlertView detailing how to use app */
+- (IBAction)showInstructions:(id)sender {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Welcome to Align!" message:@"Align lets you see WHEN people in your life are relative to you.\n\nBegin by clicking the couple holding hands. Here you can view saved individuals and add new ones.\n\nSelect people to align times with by tapping them on your list. Highlighted names will show up on the main page.\n\nScroll the green field to align your time with those of your contacts." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     //[self loadInitialData];
