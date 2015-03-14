@@ -23,4 +23,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *sunView;
 @property (strong, nonatomic) IBOutlet UIImageView *nightView;
 
+@property CGFloat dayAlpha;
+@property CGFloat sunAlpha;
+@property CGFloat nightAlpha;
+
 @end

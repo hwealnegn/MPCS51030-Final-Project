@@ -137,7 +137,6 @@
     NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
     
     if (contact.selected) {
-        //cell.accessoryType = UITableViewCellAccessoryCheckmark;
         cell.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -236,9 +235,13 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    
+    if([segue.identifier isEqualToString:@"toAddContactsSegue"]){
+        UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
+        AddContactViewController *controller = (AddContactViewController *)navController.topViewController;
+        controller.dayAlpha = self.dayView.alpha;
+        controller.sunAlpha = self.sunView.alpha;
+        controller.nightAlpha = self.nightView.alpha;
+    }
 }
 
 

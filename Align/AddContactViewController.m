@@ -49,6 +49,10 @@
     [self.nightView setImage:[UIImage imageNamed:@"nightSky"]];
     [self.view addSubview:self.nightView];
     [self.view sendSubviewToBack:self.nightView];
+    
+    self.dayView.alpha = self.dayAlpha;
+    self.sunView.alpha = self.sunAlpha;
+    self.nightView.alpha = self.nightAlpha;
 }
 
 - (void)didReceiveMemoryWarning {
