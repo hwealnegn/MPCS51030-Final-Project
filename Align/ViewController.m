@@ -38,7 +38,7 @@
     //[self loadInitialData];
     //[self.selectContacts reloadData];
     NSLog(@"VIEW APPEARED!!!!!!!");
-    NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+    //NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
     
     // Empty arrays
     [self.contacts removeAllObjects];
@@ -120,7 +120,7 @@
     CGFloat threeQuarterPosition = 0.75 * maxPosition;
 
     CGFloat initialPosition = ((hourNow * 60.0) + minuteNow) * maxPosition / 1440.0;
-    //NSLog(@"initial position: %f, time: %f", initialPosition, currentTimeFloat);
+    NSLog(@"initial position: %f, maxPos: %f, increment: %f", initialPosition, maxPosition, initialPosition/maxPosition);
     
     // Set initial scroll view position
     [self.bottomScroll setContentOffset:CGPointMake(initialPosition, 0)];
@@ -271,7 +271,7 @@
         }
     }
     
-    NSLog(@"Number of selected contacts: %lu", (unsigned long)[self.selectedContacts count]);
+    //NSLog(@"Number of selected contacts: %lu", (unsigned long)[self.selectedContacts count]);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -322,6 +322,8 @@
         minutes = [currentTime substringFromIndex:range.location+1];
     }
     
+    minutes = [NSString stringWithFormat:@"%02ld", (long)self.dynamicMinute];
+    
     NSString *diffAsStr = [NSString stringWithFormat:@"%@:%@", hours, minutes];
     //NSLog(@"Test: %@:%@ -- %@", hours, minutes, diffAsStr);
     cell.contactTime.text = diffAsStr;
@@ -333,6 +335,8 @@
     cell.contactName.textColor = [UIColor whiteColor];
     cell.contactLocation.textColor = [UIColor whiteColor];
     cell.contactTime.textColor = [UIColor whiteColor];
+    NSLog(@"Is cell's minute updating? %@", minutes);
+    NSLog(@"Test dynamic time: %ld, %ld", (long)self.dynamicHour, (long)self.dynamicMinute);
     
     return cell;
 }
@@ -344,7 +348,8 @@
 #pragma mark - Scroll View
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSInteger pageWidth = scrollView.frame.size.width;
+    //NSInteger pageWidth = scrollView.frame.size.width;
+    NSInteger pageWidth = self.view.frame.size.width;
     CGFloat maxPosition = 1200.0 - pageWidth;
     CGFloat quarterPosition = maxPosition / 4.0;
     CGFloat midPosition = maxPosition / 2.0;
@@ -357,7 +362,7 @@
     // Reference to keep leading zero: http://stackoverflow.com/questions/10790925/xcode-iphone-sdk-keep-nsinteger-zero-at-beginning
     self.yourTime.text = [NSString stringWithFormat:@"%ld:%02ld", (long)hour, (long)minute];
     
-    //NSLog(@"Position: %f, increment: %f, hour: %ld, minute: %ld", position, increment, (long)hour, (long)minute);
+    //NSLog(@"Position: %f, increment: %f, pagewidth: %ld, maxpos; %f, hour: %ld, minute: %ld", position, increment, (long)pageWidth, maxPosition, (long)hour, (long)minute);
     
     if (position < maxPosition/4.0) { // 0 to quarterPosition
         self.dayView.alpha = 0;
@@ -381,7 +386,8 @@
     
     self.dynamicHour = hour;
     self.dynamicMinute = minute;
-    
+    NSLog(@"Your time text based on scroll view: %@", self.yourTime.text);
+    //NSLog(@"**hour: %f, minute: %ld", position, (long)minute);
     NSLog(@"**HOUR: %ld, MINUTE: %ld", self.dynamicHour, self.dynamicMinute);
     
     // Update times in table view (attempt #1)
@@ -412,6 +418,8 @@
         
         NSLog(@"CONTACT TIME? %@:%@", contactHours, contactMinutes);
     }*/
+    
+    [self.selectContacts reloadData];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
