@@ -53,6 +53,22 @@
     self.dayView.alpha = self.dayAlpha;
     self.sunView.alpha = self.sunAlpha;
     self.nightView.alpha = self.nightAlpha;
+    
+    // Populate cities array (get just city names from NSTimeZones)
+    NSArray *timeZoneNames = [NSTimeZone knownTimeZoneNames];
+    self.cityNames = [[NSMutableArray alloc] init];
+    for (int i=0; i<[timeZoneNames count]; i++){
+        // Get city name
+        NSString *zone = timeZoneNames[i];
+        NSString *city;
+        NSRange range = [zone rangeOfString:@"/" options:NSBackwardsSearch];
+        if (range.location != NSNotFound) {
+            city = [zone substringFromIndex:range.location+1];
+        } else {
+            city = zone;
+        }
+        [self.cityNames addObject:city];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,12 +76,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if (sender != self.saveButton) return;
-    if (self.nameField.text.length > 0) { // need to change to whether location exists
+- (void)addNewContact {
+    if (self.nameField.text.length > 0) {
         NSLog(@"ADD THIS CONTACT!!!!");
         self.contact = [[Contact alloc] init];
         self.contact.name = self.nameField.text;
@@ -93,20 +105,20 @@
                 city = zone;
             }
             
-            NSLog(@"%@", city);
+            //NSLog(@"%@", city);
             
             NSString *contactCity = [self.locationField.text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
             if ([contactCity isEqualToString:city]) {
                 NSTimeZone *contactTimeZone = [NSTimeZone timeZoneWithName:zone];
                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
                 [formatter setTimeZone:contactTimeZone];
-
+                
                 float contactTZOffset = [contactTimeZone secondsFromGMT] / 3600.0;
                 NSLog(@"Time where contact is: %f", contactTZOffset-timeZoneOffset);
-                    
+                
                 float timeDifference = contactTZOffset-timeZoneOffset;
                 NSString *diffAsStr = [NSString stringWithFormat:@"%f", timeDifference];
-                    
+                
                 self.contact.time = diffAsStr;
             }
         }
@@ -172,11 +184,29 @@
             [defaults setObject:self.contactTimeDifferences forKey:@"contactTimes"];
             [defaults setObject:self.contactSelections forKey:@"contactSelections"];
         }
-
-        [defaults synchronize];
         
-        NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+        [defaults synchronize];
     }
+}
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if (sender != self.saveButton) return;
+
+    // First determine if location is valid
+    
+    NSString *contactCity = [self.locationField.text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    
+    if ([self.cityNames containsObject:contactCity]) {
+        NSLog(@"Location is valid!");
+        [self addNewContact];
+    } else {
+        NSLog(@"Place: %@", contactCity);
+        NSLog(@"LOCATION DOES NOT EXIST!");
+    }
+    
 }
 
 @end

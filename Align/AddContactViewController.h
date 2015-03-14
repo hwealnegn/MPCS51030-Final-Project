@@ -19,6 +19,8 @@
 @property (strong, nonatomic) NSMutableArray *contactSelections;
 @property (strong, nonatomic) NSMutableArray *contactTimeDifferences;
 
+@property (strong, nonatomic) NSMutableArray *cityNames;
+
 @property (strong, nonatomic) IBOutlet UIImageView *dayView;
 @property (strong, nonatomic) IBOutlet UIImageView *sunView;
 @property (strong, nonatomic) IBOutlet UIImageView *nightView;
