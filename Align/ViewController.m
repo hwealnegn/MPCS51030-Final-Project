@@ -296,18 +296,12 @@
     // Configure cell here!
     cell.contactName.text = contact.name;
     cell.contactLocation.text = contact.location;
-    
-    // Contact's time should be displaced from value at yourTime label
-    NSDate *currentTimeDate = [NSDate date];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"HH:mm"];
-    NSString *resultString = [dateFormatter stringFromDate: currentTimeDate];
-    NSString *currentTime = resultString;
-    //NSLog(@"Current time?? %@", currentTime);
+
     NSString *minutes;
     NSString *hours;
     
-    float currentTimeFloat = [currentTime floatValue];
+    //float currentTimeFloat = [currentTime floatValue];
+    float currentTimeFloat = self.dynamicHour;
     float contactTimeFloat = [contact.time floatValue];
     float timeDifference = contactTimeFloat + currentTimeFloat;
     if (timeDifference >= 24.0) {
@@ -316,20 +310,13 @@
     //NSLog(@"Current time: %f, Contact time: %f", currentTimeFloat, contactTimeFloat);
     //NSLog(@"Time difference: %f", timeDifference);
     
-    NSRange range = [currentTime rangeOfString:@":" options:NSBackwardsSearch]; // minutes
-    if (range.location != NSNotFound) {
-        hours = [NSString stringWithFormat:@"%d", (int)timeDifference];
-        minutes = [currentTime substringFromIndex:range.location+1];
-    }
-    
+    hours = [NSString stringWithFormat:@"%d", (int)timeDifference];
     minutes = [NSString stringWithFormat:@"%02ld", (long)self.dynamicMinute];
     
     NSString *diffAsStr = [NSString stringWithFormat:@"%@:%@", hours, minutes];
-    //NSLog(@"Test: %@:%@ -- %@", hours, minutes, diffAsStr);
     cell.contactTime.text = diffAsStr;
     
     //NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
-    //NSLog(@"time float: %f", currentTimeFloat);
     
     cell.backgroundColor = [UIColor clearColor];
     cell.contactName.textColor = [UIColor whiteColor];
