@@ -36,6 +36,23 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.selectContacts reloadData];
+    NSLog(@"VIEW APPEARED!!!!!!!");
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.contacts = [[NSMutableArray alloc] init];
+    self.contactNames = [[NSMutableArray alloc] init];
+    self.contactLocations = [[NSMutableArray alloc] init];
+    self.contactSelections = [[NSMutableArray alloc] init];
+    self.contactTimes = [[NSMutableArray alloc] init];
+    self.selectedContacts = [[NSMutableArray alloc] init];
+    
+    [self loadInitialData];
+    
+    // Initialize scroll view
+    [self.bottomScroll setContentSize:CGSizeMake(1200, 90)];
+    
     [self.scrollView addSubview:self.scrollImage];
     
     // Initialize scroll view at current time
@@ -52,34 +69,18 @@
     
     NSString *resultString = [dateFormatter stringFromDate: currentTime];
     float currentTimeFloat = [resultString floatValue]; // current hour
-
     
     NSInteger pageWidth = self.view.frame.size.width;
     CGFloat maxPosition = 1200.0 - pageWidth;
-    //CGFloat position = self.scrollView.contentOffset.x;
-    //CGFloat increment = position/maxPosition;
-    //NSInteger hour = increment*24;
-    
-    //CGFloat initialPosition = currentTimeFloat * maxPosition / 24.0;
+    CGFloat quarterPosition = maxPosition / 4.0;
+    CGFloat midPosition = maxPosition / 2.0;
+    CGFloat threeQuarterPosition = 0.75 * maxPosition;
+
     CGFloat initialPosition = ((hourNow * 60.0) + minuteNow) * maxPosition / 1440.0;
     NSLog(@"initial position: %f, time: %f", initialPosition, currentTimeFloat);
     
+    // Set initial scroll view position
     [self.bottomScroll setContentOffset:CGPointMake(initialPosition, 0)];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.contacts = [[NSMutableArray alloc] init];
-    self.contactNames = [[NSMutableArray alloc] init];
-    self.contactLocations = [[NSMutableArray alloc] init];
-    self.contactSelections = [[NSMutableArray alloc] init];
-    self.contactTimes = [[NSMutableArray alloc] init];
-    self.selectedContacts = [[NSMutableArray alloc] init];
-    
-    [self loadInitialData];
-    
-    // Initialize scroll view
-    [self.bottomScroll setContentSize:CGSizeMake(1200, 90)];
     
     // Add shadow to scroll view image
     // Reference: http://stackoverflow.com/questions/2044479/what-is-the-best-way-to-create-a-shadow-behind-a-uiimageview
@@ -114,12 +115,31 @@
     [self.view addSubview:self.nightView];
     [self.view sendSubviewToBack:self.nightView];
     
+    // Set initial background
+    if (initialPosition < maxPosition/4.0) { // 0 to quarterPosition
+        self.dayView.alpha = 0;
+        self.sunView.alpha = initialPosition/quarterPosition;
+        self.nightView.alpha = 1 - initialPosition/quarterPosition;
+    } else if (initialPosition >= maxPosition/4.0 && initialPosition < maxPosition/2.0) { // quarterPosition to midPosition
+        self.dayView.alpha = (initialPosition-quarterPosition)/(midPosition-quarterPosition);
+        self.sunView.alpha = 1 - (initialPosition-quarterPosition)/(midPosition-quarterPosition);
+        self.nightView.alpha = 0;
+    } else if (initialPosition >= maxPosition/2.0 && initialPosition < (3.0 * maxPosition)/4.0){ // midPosition to threeQuarterPosition
+        self.dayView.alpha = 1 - (initialPosition-midPosition)/(threeQuarterPosition-midPosition);
+        self.sunView.alpha = (initialPosition - midPosition)/(threeQuarterPosition-midPosition);
+        self.nightView.alpha = 0;
+    } else { // threeQuarterPosition to maxPosition
+        self.dayView.alpha = 0;
+        self.sunView.alpha = 1 - (initialPosition - threeQuarterPosition)/(maxPosition-threeQuarterPosition);
+        self.nightView.alpha = (initialPosition - threeQuarterPosition)/(maxPosition-threeQuarterPosition);
+    }
+    
     // Set your time as current time
     // Reference: http://stackoverflow.com/questions/8385132/get-current-time-on-the-iphone-in-a-chosen-format
-    NSDate *currentTime = [NSDate date];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    NSDate *currentTime = [NSDate date];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"HH:mm"];
-     NSString *resultString = [dateFormatter stringFromDate: currentTime];
+//     NSString *resultString = [dateFormatter stringFromDate: currentTime];
     NSLog(@"RESULT STRING: %@", resultString);
     self.yourTime.text = resultString;
     self.yourTime.textColor = [UIColor whiteColor];
@@ -302,15 +322,6 @@
     self.yourTime.text = [NSString stringWithFormat:@"%ld:%02ld", (long)hour, (long)minute]; // something wrong with this
     
     //NSLog(@"Position: %f, increment: %f, hour: %ld, minute: %ld", position, increment, (long)hour, (long)minute);
-    
-    // Set alpha values of sky relative to position of scroll view
-    /*if (position < maxPosition/2.0) {
-        self.dayView.alpha = position/midPosition;
-        self.nightView.alpha = 1 - position/midPosition;
-    } else {
-        self.dayView.alpha = (maxPosition - position)/midPosition;
-        self.nightView.alpha = 1 - (maxPosition - position)/midPosition;
-    }*/
     
     if (position < maxPosition/4.0) { // 0 to quarterPosition
         self.dayView.alpha = 0;

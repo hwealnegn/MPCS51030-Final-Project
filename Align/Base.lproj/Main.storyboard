@@ -90,7 +90,6 @@
                                 </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="vXZ-lx-hvc" id="Tcu-eJ-JeU"/>
-                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="GWR-Mc-79E"/>
                                 </connections>
                             </tableView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lX0-Sy-hxI">
