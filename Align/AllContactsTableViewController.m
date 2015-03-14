@@ -47,11 +47,16 @@
     NSLog(@"Size of contactNames: %lu, contacts: %lu, contactSelections: %lu", (unsigned long)[self.contactNames count], (unsigned long)[self.contacts count], (unsigned long)[self.contactSelections count]);
     
     // Reference for making navigation bar transparent: http://stackoverflow.com/questions/2315862/make-uinavigationbar-transparent
+    self.view.backgroundColor = [UIColor clearColor];
+    
+    self.tableView.backgroundView = nil;
     self.tableView.backgroundColor = [UIColor clearColor];
+    
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
                                                   forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = YES;
+    
     
     // Initialize day/night sky backgrounds
     self.dayView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];

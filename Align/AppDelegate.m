@@ -16,13 +16,24 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self setPreferenceDefaults];
+    
     // Reference: http://www.raywenderlich.com/21703/user-interface-customization-in-ios-6
-    [[UINavigationBar appearance] setBarTintColor:[UIColor grayColor]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor clearColor]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                           [UIColor whiteColor], NSForegroundColorAttributeName,
                                                           nil]];
     return YES;
+}
+
+- (void) setPreferenceDefaults {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *appDefaults = [NSDictionary dictionaryWithObject:[NSDate date] forKey:@"Initial Launch"];
+    [defaults registerDefaults:appDefaults];
+    [defaults setValue:@"1.0" forKey:@"appVersion"];
+    [defaults synchronize];
+    NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

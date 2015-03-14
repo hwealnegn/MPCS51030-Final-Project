@@ -179,10 +179,7 @@
     
     // Set your time as current time
     // Reference: http://stackoverflow.com/questions/8385132/get-current-time-on-the-iphone-in-a-chosen-format
-//    NSDate *currentTime = [NSDate date];
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"HH:mm"];
-//     NSString *resultString = [dateFormatter stringFromDate: currentTime];
     NSLog(@"RESULT STRING: %@", resultString);
     self.yourTime.text = resultString;
     self.yourTime.textColor = [UIColor whiteColor];
@@ -376,35 +373,6 @@
     NSLog(@"Your time text based on scroll view: %@", self.yourTime.text);
     //NSLog(@"**hour: %f, minute: %ld", position, (long)minute);
     NSLog(@"**HOUR: %ld, MINUTE: %ld", self.dynamicHour, self.dynamicMinute);
-    
-    // Update times in table view (attempt #1)
-    /*for (int i=0; i<[self.selectedContacts count]; i++) {
-        NSIndexPath *path = [NSIndexPath indexPathForRow:i inSection:0];
-        ContactTableViewCell *cell = [self.selectContacts cellForRowAtIndexPath:path];
-        Contact *contact = [self.selectedContacts objectAtIndex:i]; // only show selected contacts
-        
-        NSString *contactMinutes;
-        NSString *contactHours;
-        
-        float currentTimeFloat = hour;
-        float contactTimeFloat = [contact.time floatValue];
-        float timeDifference = contactTimeFloat + currentTimeFloat;
-        if (timeDifference >= 24.0) {
-            timeDifference = timeDifference - 24.0;
-        }
-        //NSLog(@"Current time: %f, Contact time: %f", currentTimeFloat, contactTimeFloat);
-        //NSLog(@"Time difference: %f", timeDifference);
-
-        contactHours = [NSString stringWithFormat:@"%d", (int)timeDifference];
-        contactMinutes = [NSString stringWithFormat:@"%ld", (long)minute];
-        
-        NSString *diffAsStr = [NSString stringWithFormat:@"%@:%@", contactHours, contactMinutes];
-        NSLog(@"Is this working? %@", diffAsStr);
-        cell.contactTime.text = diffAsStr;
-        [self.selectContacts reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-        
-        NSLog(@"CONTACT TIME? %@:%@", contactHours, contactMinutes);
-    }*/
     
     [self.selectContacts reloadData];
 }

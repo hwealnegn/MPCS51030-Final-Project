@@ -18,6 +18,7 @@
 		3B1B93A91AA5214100B2B1A0 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1B93A81AA5214100B2B1A0 /* Contact.m */; };
 		3B3257271AAFA24A0058F8D6 /* AddContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3257261AAFA24A0058F8D6 /* AddContactViewController.m */; };
 		3BBE57BA1AACE46000A367F1 /* AllContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE57B91AACE46000A367F1 /* AllContactsTableViewController.m */; };
+		3BD1A2B01AB4BC3500F27300 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3BD1A2AF1AB4BC3500F27300 /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		3B3257261AAFA24A0058F8D6 /* AddContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddContactViewController.m; sourceTree = "<group>"; };
 		3BBE57B81AACE46000A367F1 /* AllContactsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllContactsTableViewController.h; sourceTree = "<group>"; };
 		3BBE57B91AACE46000A367F1 /* AllContactsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllContactsTableViewController.m; sourceTree = "<group>"; };
+		3BD1A2AF1AB4BC3500F27300 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 		3B1B936F1AA5110100B2B1A0 = {
 			isa = PBXGroup;
 			children = (
+				3BD1A2AF1AB4BC3500F27300 /* Settings.bundle */,
 				3B1B937A1AA5110100B2B1A0 /* Align */,
 				3B1B93941AA5110100B2B1A0 /* AlignTests */,
 				3B1B93791AA5110100B2B1A0 /* Products */,
@@ -219,6 +222,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BD1A2B01AB4BC3500F27300 /* Settings.bundle in Resources */,
 				3B1B93871AA5110100B2B1A0 /* Main.storyboard in Resources */,
 				3B1B938C1AA5110100B2B1A0 /* LaunchScreen.xib in Resources */,
 				3B1B93891AA5110100B2B1A0 /* Images.xcassets in Resources */,
