@@ -76,13 +76,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+// Create and save new contact
 - (void)addNewContact {
     if (self.nameField.text.length > 0) {
-        NSLog(@"ADD THIS CONTACT!!!!");
         self.contact = [[Contact alloc] init];
         self.contact.name = self.nameField.text;
         self.contact.location = self.locationField.text;
-        self.contact.time = @"-1"; // need to implement logic where location is associated with time
+        self.contact.time = @"-1"; // this is overwritten depending on location
         self.contact.selected = NO; // will not display on main view unless selected
         
         // Calculate time difference
@@ -90,8 +90,6 @@
         NSTimeZone *destinationTimeZone = [NSTimeZone systemTimeZone];
         float timeZoneOffset = [destinationTimeZone secondsFromGMT] / 3600.0;
         NSLog(@"Time zone offset: %f", timeZoneOffset);
-        
-        NSLog(@"FIRST VIEW DID LOAD");
         
         NSArray *timeZoneNames = [NSTimeZone knownTimeZoneNames];
         for (int i=0; i<[timeZoneNames count]; i++){
@@ -129,8 +127,6 @@
         
         // Save contact name
         if ([defaults objectForKey:@"contactNames"] != nil) {
-            NSLog(@"There's something");
-            
             NSInteger exists = 0;
             
             [self.contactNames addObjectsFromArray:[defaults objectForKey:@"contactNames"]];
@@ -209,7 +205,7 @@
     
 }
 
-/* Check if location is valid and if contact already exists */
+// Check if location is valid and if contact already exists
 - (IBAction)addContactCheckpoint:(id)sender {
     NSString *contactCity = [self.locationField.text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     

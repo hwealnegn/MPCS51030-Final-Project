@@ -26,8 +26,14 @@
     AddContactViewController *source = [segue sourceViewController];
     Contact *newContact = source.contact;
      if (newContact != nil) {
-         [self.contacts addObject:newContact];
-         [self.tableView reloadData];
+         if ([self.contactNames containsObject:newContact.name]) {
+             NSLog(@"HEY CONTACT EXISTS ALREADY");
+             // should overwrite location if segue is allowed
+         } else {
+             NSLog(@"Welcome newcomer!");
+             [self.contacts addObject:newContact];
+             [self.tableView reloadData];
+         }
      }
 }
 
