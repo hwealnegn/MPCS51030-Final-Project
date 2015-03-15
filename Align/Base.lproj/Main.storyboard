@@ -147,7 +147,7 @@
                                 <segue destination="Qt9-dw-OX5" kind="presentation" identifier="toAllContactsSegue" id="dal-Z8-psh"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="Settings-100" id="wcb-d4-vJK">
+                        <barButtonItem key="rightBarButtonItem" image="Question-100" id="wcb-d4-vJK">
                             <inset key="imageInsets" minX="75" minY="45" maxX="5" maxY="35"/>
                             <connections>
                                 <action selector="showInstructions:" destination="vXZ-lx-hvc" id="tye-os-wdk"/>
@@ -239,7 +239,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="ld7-6e-nVD">
                         <barButtonItem key="backBarButtonItem" title="Back" id="OAE-PZ-qaG"/>
-                        <barButtonItem key="leftBarButtonItem" image="Clock-100" id="eLP-lN-35e">
+                        <barButtonItem key="leftBarButtonItem" image="Left2-100" id="eLP-lN-35e">
                             <inset key="imageInsets" minX="-5" minY="45" maxX="85" maxY="35"/>
                             <connections>
                                 <segue destination="7Vu-LN-AHm" kind="unwind" unwindAction="unwindToList:" id="HSH-xY-B9A"/>
@@ -393,9 +393,9 @@
     <resources>
         <image name="Cancel-100" width="100" height="100"/>
         <image name="Checkmark-100" width="100" height="100"/>
-        <image name="Clock-100" width="100" height="100"/>
+        <image name="Left2-100" width="100" height="100"/>
         <image name="Meeting-100" width="100" height="100"/>
-        <image name="Settings-100" width="100" height="100"/>
+        <image name="Question-100" width="100" height="100"/>
         <image name="waveVector" width="1200" height="90"/>
     </resources>
 </document>
