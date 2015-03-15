@@ -65,6 +65,7 @@
     double delayInTransition = 1.0;
     dispatch_time_t switchTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInTransition * NSEC_PER_SEC));
     dispatch_after(switchTime, dispatch_get_main_queue(), ^(void){
+        // Reference: http://stackoverflow.com/questions/17277712/two-views-on-top-of-each-other-cross-fade-between-ios
         [UIView animateWithDuration:0.5 animations:^{
             splashOne.alpha = 0;
             splashTwo.alpha = 1;
