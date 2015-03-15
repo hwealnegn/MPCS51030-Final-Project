@@ -14,6 +14,14 @@
 
 @implementation AppDelegate
 
+// Dismiss splash screen
+- (void)dismissSplashScreen {
+    // Reference for animation: http://stackoverflow.com/questions/9115854/animating-hide-show
+    [UIView transitionWithView:self.splash duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:NULL completion:NULL]; // delay dismissal
+    [self.splash setHidden:YES];
+    NSLog(@"Notification received!!");
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self setPreferenceDefaults];
@@ -24,6 +32,33 @@
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                           [UIColor whiteColor], NSForegroundColorAttributeName,
                                                           nil]];
+    
+    // Splash screen
+    self.splash = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.window.frame.size.width, self.window.frame.size.height)];
+    self.splash.backgroundColor = [UIColor colorWithRed:1.0 green:0.5 blue:0.5 alpha:1.0];
+    [self.window.rootViewController.view addSubview:self.splash];
+    
+    UILabel *splashTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, self.splash.frame.size.height/2.0, self.splash.frame.size.width, 50)];
+    splashTitle.numberOfLines = 2;
+    splashTitle.text = @"Align\nHelen Wang";
+    splashTitle.textAlignment = NSTextAlignmentCenter;
+    splashTitle.textColor = [UIColor whiteColor];
+    splashTitle.backgroundColor = [UIColor clearColor];
+    
+    [self.splash addSubview:splashTitle];
+    
+    // Display splash screen for set amount of time (no notifications set up)
+    // Reference for adding delay: http://stackoverflow.com/questions/15335649/adding-delay-between-execution-of-two-following-lines
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        NSLog(@"Do some work");
+        [self dismissSplashScreen];
+    });
+    
+    
+    NSLog(@"Splash screen is showing");
+    
     return YES;
 }
 

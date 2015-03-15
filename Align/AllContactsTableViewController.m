@@ -57,7 +57,6 @@
              [self.tableView reloadData];
          }
      }
-    NSLog(@"Count of name: %lu, location: %lu, selection: %lu, time: %lu, contacts: %lu", (unsigned long)[self.contactNames count], (unsigned long)[self.contactLocations count], (unsigned long)[self.contactSelections count], (unsigned long)[self.contactTimes count], (unsigned long)[self.contacts count]);
 }
 
 - (IBAction)addContact:(id)sender {
