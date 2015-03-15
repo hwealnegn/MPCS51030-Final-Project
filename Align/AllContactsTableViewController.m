@@ -28,7 +28,18 @@
      if (newContact != nil) {
          if ([self.contactNames containsObject:newContact.name]) {
              NSLog(@"HEY CONTACT EXISTS ALREADY");
-             // should overwrite location if segue is allowed
+             // Overwrite location
+             NSInteger index = [self.contactNames indexOfObject:newContact.name];
+             Contact *existingContact = self.contacts[index];
+             NSLog(@"Before: %@, %@", self.contactLocations[index], existingContact.location);
+             self.contactLocations[index] = newContact.location;
+             existingContact.location = newContact.location;
+             NSLog(@"After: %@, %@", self.contactLocations[index], existingContact.location);
+             
+             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+             [defaults setObject:self.contactLocations forKey:@"contactLocations"]; // ????
+             
+             [self.tableView reloadData];
          } else {
              NSLog(@"Welcome newcomer!");
              [self.contacts addObject:newContact];

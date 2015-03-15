@@ -9,7 +9,7 @@
 #import "AddContactViewController.h"
 #import "ViewController.h"
 
-@interface AddContactViewController ()
+@interface AddContactViewController () <UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UITextField *locationField;
@@ -121,7 +121,6 @@
             }
         }
         
-        
         // Save information to NSUserDefaults
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
@@ -134,7 +133,7 @@
             [self.contactTimeDifferences addObjectsFromArray:[defaults objectForKey:@"contactTimes"]];
             [self.contactSelections addObjectsFromArray:[defaults objectForKey:@"contactSelections"]];
             
-            // Check if contact is already in array (NOTE: NEED TO UPDATE THIS!)
+            // Check if contact is already in array
             for (NSString *name in self.contactNames){
                 if ([name isEqualToString:self.contact.name]) { // contact already saved
                     NSLog(@"Contact already exists");
@@ -160,8 +159,13 @@
                 [defaults setObject:self.contactLocations forKey:@"contactLocations"];
                 [defaults setObject:self.contactTimeDifferences forKey:@"contactTimes"];
                 [defaults setObject:self.contactSelections forKey:@"contactSelections"];
+                
+                [self performSegueWithIdentifier:@"unwindToContacts" sender:self];
             } else {
                 NSLog(@"DO NOT CREATE NEW CONTACT");
+                UIAlertView *alertConflict = [[UIAlertView alloc] initWithTitle:@"Contact Already Exists" message:@"This contact is already in your list! Would you like to update their location?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+                alertConflict.tag = 11;
+                [alertConflict show];
             }
             
         } else {
@@ -185,24 +189,40 @@
     }
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    // Clicked a button on the contacts conflict alert view
+    if (alertView.tag == 11) {
+        NSLog(@"There is a conflict");
+        if (buttonIndex == [alertView cancelButtonIndex]) {
+            // Don't do anything
+            NSLog(@"Do not overwrite contact");
+        } else {
+            // Pass along the contact (modify existing contact's location in segue method)
+            // Resource for performing unwind segue programmatically: http://spin.atomicobject.com/2014/12/01/program-ios-unwind-segue/
+            [self performSegueWithIdentifier:@"unwindToContacts" sender:self];
+        }
+    }
+}
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if (sender != self.saveButton) return;
-
-    // First determine if location is valid
-    
-    NSString *contactCity = [self.locationField.text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-    
-    if ([self.cityNames containsObject:contactCity]) {
-        NSLog(@"Location is valid!");
-        [self addNewContact];
-    } else {
-        NSLog(@"Place: %@", contactCity);
-        NSLog(@"LOCATION DOES NOT EXIST!");
+    if ([segue.identifier isEqualToString:@"unwindToContacts"]) {
+        if (sender != self.saveButton) return;
+        
+        // First determine if location is valid
+        
+        NSString *contactCity = [self.locationField.text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+        
+        if ([self.cityNames containsObject:contactCity]) {
+            NSLog(@"Location is valid!");
+            [self addNewContact];
+        } else {
+            NSLog(@"Place: %@", contactCity);
+            NSLog(@"LOCATION DOES NOT EXIST!");
+        }
     }
-    
 }
 
 // Check if location is valid and if contact already exists
@@ -211,7 +231,7 @@
     
     if ([self.cityNames containsObject:contactCity]) {
         NSLog(@"Location is valid!");
-        [self addNewContact];
+        [self addNewContact]; // handles case if contact already exists
     } else {
         NSLog(@"Place: %@", contactCity);
         NSLog(@"LOCATION DOES NOT EXIST!");

@@ -315,7 +315,7 @@
                         <barButtonItem key="leftBarButtonItem" image="Cancel-100" id="Ja4-Su-PaC">
                             <inset key="imageInsets" minX="-5" minY="45" maxX="85" maxY="35"/>
                             <connections>
-                                <segue destination="CWd-Sd-2aj" kind="unwind" unwindAction="unwindToContacts:" id="sV7-9h-ATE"/>
+                                <segue destination="CWd-Sd-2aj" kind="unwind" unwindAction="unwindToContacts:" id="d7Z-jp-1PD"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="Checkmark-100" id="vv1-6Q-5Um">
@@ -329,6 +329,7 @@
                         <outlet property="locationField" destination="hdn-BD-eh5" id="GUc-Vd-3W4"/>
                         <outlet property="nameField" destination="o1t-C8-1T0" id="F2T-lO-G2Q"/>
                         <outlet property="saveButton" destination="vv1-6Q-5Um" id="Fa7-PQ-Zf4"/>
+                        <segue destination="CWd-Sd-2aj" kind="unwind" identifier="unwindToContacts" unwindAction="unwindToContacts:" id="W0y-L1-sTq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G4b-Sn-XYn" userLabel="First Responder" sceneMemberID="firstResponder"/>
