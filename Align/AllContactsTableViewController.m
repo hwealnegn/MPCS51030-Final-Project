@@ -231,13 +231,7 @@
         [defaults setObject:self.contactLocations forKey:@"contactLocations"];
         
         [self.contactSelections removeObjectAtIndex:indexPath.row];
-        NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
-        for (int i=0; i<[self.contactSelections count]; i++) {
-            NSNumber *boolean = [NSNumber numberWithBool:self.contactSelections[i]]; // convert to bool for defaults
-            NSLog(@"Boolean? %@, %@", boolean, self.contactSelections[i]);
-            [tmpArray addObject:boolean];
-        }
-        [defaults setObject:tmpArray forKey:@"contactSelections"]; // store array of booleans in defaults
+        [defaults setObject:self.contactSelections forKey:@"contactSelections"]; // store array of booleans in defaults
         
         [self.contactTimes removeObjectAtIndex:indexPath.row];
         [defaults setObject:self.contactTimes forKey:@"contactTimes"];
