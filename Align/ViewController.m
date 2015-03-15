@@ -105,7 +105,7 @@
     self.dynamicHour = hourNow;
     self.dynamicMinute = minuteNow;
     
-    NSLog(@"HELLOLOLO %ld, %ld", (long)self.dynamicHour, (long)self.dynamicMinute);
+    //NSLog(@"HELLOLOLO %ld, %ld", (long)self.dynamicHour, (long)self.dynamicMinute);
     
     //NSLog(@"hour: %ld, minute: %ld", (long)hourNow, (long)minuteNow);
     
@@ -118,7 +118,7 @@
     CGFloat threeQuarterPosition = 0.75 * maxPosition;
 
     CGFloat initialPosition = ((hourNow * 60.0) + minuteNow) * maxPosition / 1440.0;
-    NSLog(@"initial position: %f, maxPos: %f, increment: %f", initialPosition, maxPosition, initialPosition/maxPosition);
+    //NSLog(@"initial position: %f, maxPos: %f, increment: %f", initialPosition, maxPosition, initialPosition/maxPosition);
     
     // Set initial scroll view position
     [self.bottomScroll setContentOffset:CGPointMake(initialPosition, 0)];
