@@ -19,7 +19,7 @@
     // Reference for animation: http://stackoverflow.com/questions/9115854/animating-hide-show
     [UIView transitionWithView:self.splash duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:NULL completion:NULL]; // delay dismissal
     [self.splash setHidden:YES];
-    NSLog(@"Notification received!!");
+    NSLog(@"Splash screen dismissed");
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -45,19 +45,39 @@
     splashTitle.textColor = [UIColor whiteColor];
     splashTitle.backgroundColor = [UIColor clearColor];
     
-    [self.splash addSubview:splashTitle];
+    //[self.splash addSubview:splashTitle];
     
-    // Display splash screen for set amount of time (no notifications set up)
+    // Add images for splash screen background
+    UIView *tmpView = [[UIView alloc] init];
+    [self.splash addSubview:tmpView];
+    
+    UIImageView *splashOne = [[UIImageView alloc] initWithFrame:CGRectMake(0-(350-self.window.frame.size.width/2.0), 0-(350-self.window.frame.size.height/2.0), 700, 700)];
+    [splashOne setImage:[UIImage imageNamed:@"splashScreenOne"]];
+    [tmpView addSubview:splashOne];
+    
+    UIImageView *splashTwo = [[UIImageView alloc] initWithFrame:CGRectMake(0-(350-self.window.frame.size.width/2.0), 0-(350-self.window.frame.size.height/2.0), 700, 700)];
+    [splashTwo setImage:[UIImage imageNamed:@"splashScreenTwo"]];
+    [tmpView addSubview:splashTwo];
+    [tmpView sendSubviewToBack:splashTwo];
+    
     // Reference for adding delay: http://stackoverflow.com/questions/15335649/adding-delay-between-execution-of-two-following-lines
-    double delayInSeconds = 1.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        NSLog(@"Do some work");
-        [self dismissSplashScreen];
+    double delayInTransition = 1.0;
+    dispatch_time_t switchTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInTransition * NSEC_PER_SEC));
+    dispatch_after(switchTime, dispatch_get_main_queue(), ^(void){
+        [UIView animateWithDuration:0.5 animations:^{
+            splashOne.alpha = 0;
+            splashTwo.alpha = 1;
+        }];
     });
     
-    
     NSLog(@"Splash screen is showing");
+    
+    // Dismiss splash screen after set amount of time
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self dismissSplashScreen];
+    });
     
     return YES;
 }
