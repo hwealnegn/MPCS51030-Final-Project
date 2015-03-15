@@ -76,10 +76,7 @@
     
     // Reference for making navigation bar transparent: http://stackoverflow.com/questions/2315862/make-uinavigationbar-transparent
     self.view.backgroundColor = [UIColor clearColor];
-    
     self.tableView.backgroundColor = [UIColor clearColor];
-    //self.tableView.backgroundView = nil;
-    
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
                                                   forBarMetrics:UIBarMetricsDefault];

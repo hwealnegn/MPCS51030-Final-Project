@@ -34,9 +34,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //[self loadInitialData];
-    //[self.selectContacts reloadData];
-    NSLog(@"VIEW APPEARED!!!!!!!");
+    //NSLog(@"VIEW APPEARED!!!!!!!");
     //NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
     
     // Empty arrays
@@ -328,7 +326,6 @@
 #pragma mark - Scroll View
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    //NSInteger pageWidth = scrollView.frame.size.width;
     NSInteger pageWidth = self.view.frame.size.width;
     CGFloat maxPosition = 1200.0 - pageWidth;
     CGFloat quarterPosition = maxPosition / 4.0;
