@@ -183,6 +183,8 @@
             [defaults setObject:self.contactLocations forKey:@"contactLocations"];
             [defaults setObject:self.contactTimeDifferences forKey:@"contactTimes"];
             [defaults setObject:self.contactSelections forKey:@"contactSelections"];
+            
+            [self performSegueWithIdentifier:@"unwindToContacts" sender:self];
         }
         
         [defaults synchronize];
@@ -191,6 +193,8 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     // Clicked a button on the contacts conflict alert view
+    // Resource for performing alert view before segue: http://stackoverflow.com/questions/24128437/perform-uialertview-before-performing-segue
+    // Resource for distinguishing alert views: http://stackoverflow.com/questions/2338546/several-uialertviews-for-a-delegate
     if (alertView.tag == 11) {
         NSLog(@"There is a conflict");
         if (buttonIndex == [alertView cancelButtonIndex]) {

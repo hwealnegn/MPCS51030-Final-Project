@@ -227,6 +227,7 @@
         NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
         for (int i=0; i<[self.contactSelections count]; i++) {
             NSNumber *boolean = [NSNumber numberWithBool:self.contactSelections[i]]; // convert to bool for defaults
+            NSLog(@"Boolean? %@, %@", boolean, self.contactSelections[i]);
             [tmpArray addObject:boolean];
         }
         [defaults setObject:tmpArray forKey:@"contactSelections"]; // store array of booleans in defaults
@@ -235,6 +236,7 @@
         [defaults setObject:self.contactTimes forKey:@"contactTimes"];
         
         [defaults synchronize];
+        NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
         
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {

@@ -344,7 +344,7 @@
     // Reference to keep leading zero: http://stackoverflow.com/questions/10790925/xcode-iphone-sdk-keep-nsinteger-zero-at-beginning
     self.yourTime.text = [NSString stringWithFormat:@"%ld:%02ld", (long)hour, (long)minute];
     
-    NSLog(@"Position: %f, increment: %f, pagewidth: %ld, maxpos; %f, hour: %ld, minute: %ld", position, increment, (long)pageWidth, maxPosition, (long)hour, (long)minute);
+    //NSLog(@"Position: %f, increment: %f, pagewidth: %ld, maxpos; %f, hour: %ld, minute: %ld", position, increment, (long)pageWidth, maxPosition, (long)hour, (long)minute);
     
     if (position < maxPosition/4.0) { // 0 to quarterPosition
         self.dayView.alpha = 0;
@@ -368,8 +368,8 @@
     
     self.dynamicHour = hour;
     self.dynamicMinute = minute;
-    NSLog(@"Your time text based on scroll view: %@", self.yourTime.text);
-    NSLog(@"**HOUR: %ld, MINUTE: %ld", self.dynamicHour, self.dynamicMinute);
+    //NSLog(@"Your time text based on scroll view: %@", self.yourTime.text);
+    //NSLog(@"**HOUR: %ld, MINUTE: %ld", self.dynamicHour, self.dynamicMinute);
     
     [self.selectContacts reloadData];
 }
