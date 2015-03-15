@@ -188,8 +188,6 @@
     float timeZoneOffset = [destinationTimeZone secondsFromGMT] / 3600.0;
     NSLog(@"Time zone offset: %f", timeZoneOffset);
     
-    NSLog(@"FIRST VIEW DID LOAD");
-    
     NSArray *timeZoneNames = [NSTimeZone knownTimeZoneNames];
     for (int i=0; i<[timeZoneNames count]; i++){
         //NSLog(@"%@", timeZoneNames[i]);

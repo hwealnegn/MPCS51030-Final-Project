@@ -36,20 +36,20 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UaI-dO-fz3" id="tUA-fG-uXT">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="870-zN-bFc">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="870-zN-bFc">
                                                     <rect key="frame" x="517" y="9" width="65" height="36"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ne9-OW-iq2">
-                                                    <rect key="frame" x="517" y="48" width="65" height="23"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ne9-OW-iq2">
+                                                    <rect key="frame" x="417" y="48" width="165" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rYg-yo-mgq">
-                                                    <rect key="frame" x="18" y="23" width="365" height="33"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="rYg-yo-mgq">
+                                                    <rect key="frame" x="18" y="23" width="399" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -61,13 +61,13 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="ne9-OW-iq2" secondAttribute="bottom" id="4C4-KS-VJD"/>
                                                 <constraint firstItem="ne9-OW-iq2" firstAttribute="top" secondItem="870-zN-bFc" secondAttribute="bottom" constant="3" id="8dk-Tq-doB"/>
                                                 <constraint firstItem="rYg-yo-mgq" firstAttribute="leading" secondItem="tUA-fG-uXT" secondAttribute="leadingMargin" constant="10" id="ACF-yG-JdY"/>
-                                                <constraint firstItem="870-zN-bFc" firstAttribute="leading" secondItem="rYg-yo-mgq" secondAttribute="trailing" constant="134" id="AqY-Bd-ihR"/>
+                                                <constraint firstItem="870-zN-bFc" firstAttribute="leading" secondItem="rYg-yo-mgq" secondAttribute="trailing" constant="100" id="AqY-Bd-ihR"/>
                                                 <constraint firstItem="ne9-OW-iq2" firstAttribute="trailing" secondItem="tUA-fG-uXT" secondAttribute="trailingMargin" constant="-10" id="UJK-dx-nBi"/>
                                                 <constraint firstItem="ne9-OW-iq2" firstAttribute="top" secondItem="870-zN-bFc" secondAttribute="bottom" constant="3" id="Waa-vI-fct"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="rYg-yo-mgq" secondAttribute="bottom" constant="15" id="ani-UL-6Qj"/>
                                                 <constraint firstItem="870-zN-bFc" firstAttribute="trailing" secondItem="tUA-fG-uXT" secondAttribute="trailingMargin" constant="-10" id="i1S-pz-pRH"/>
                                                 <constraint firstItem="870-zN-bFc" firstAttribute="top" secondItem="tUA-fG-uXT" secondAttribute="topMargin" constant="1" id="xbV-ys-fIP"/>
-                                                <constraint firstItem="ne9-OW-iq2" firstAttribute="leading" secondItem="rYg-yo-mgq" secondAttribute="trailing" constant="134" id="xgV-cv-4bo"/>
+                                                <constraint firstItem="ne9-OW-iq2" firstAttribute="leading" secondItem="rYg-yo-mgq" secondAttribute="trailing" id="xgV-cv-4bo"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -163,7 +163,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1286" y="554"/>
+            <point key="canvasLocation" x="1286" y="553"/>
         </scene>
         <!--All Contacts Table View Controller-->
         <scene sceneID="Lhj-Ov-Zfl">

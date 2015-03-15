@@ -43,6 +43,7 @@
              NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
              [defaults setObject:self.contactLocations forKey:@"contactLocations"];
              [defaults setObject:self.contactTimes forKey:@"contactTimes"];
+             [defaults synchronize];
              
              [self.tableView reloadData];
          } else {
