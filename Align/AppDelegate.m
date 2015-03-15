@@ -38,14 +38,13 @@
     self.splash.backgroundColor = [UIColor colorWithRed:1.0 green:0.5 blue:0.5 alpha:1.0];
     [self.window.rootViewController.view addSubview:self.splash];
     
-    UILabel *splashTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, self.splash.frame.size.height/2.0, self.splash.frame.size.width, 50)];
+    CGFloat labelHeight = 50.0;
+    UILabel *splashTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, (self.splash.frame.size.height-labelHeight)/2.0, self.splash.frame.size.width, labelHeight)];
     splashTitle.numberOfLines = 2;
-    splashTitle.text = @"Align\nHelen Wang";
+    splashTitle.text = @"ALIGN\nHelen Wang";
     splashTitle.textAlignment = NSTextAlignmentCenter;
-    splashTitle.textColor = [UIColor whiteColor];
+    splashTitle.textColor = [UIColor grayColor];
     splashTitle.backgroundColor = [UIColor clearColor];
-    
-    //[self.splash addSubview:splashTitle];
     
     // Add images for splash screen background
     UIView *tmpView = [[UIView alloc] init];
@@ -59,6 +58,8 @@
     [splashTwo setImage:[UIImage imageNamed:@"splashScreenTwo"]];
     [tmpView addSubview:splashTwo];
     [tmpView sendSubviewToBack:splashTwo];
+    
+    [self.splash addSubview:splashTitle];
     
     // Reference for adding delay: http://stackoverflow.com/questions/15335649/adding-delay-between-execution-of-two-following-lines
     double delayInTransition = 1.0;
