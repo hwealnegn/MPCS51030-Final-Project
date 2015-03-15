@@ -32,6 +32,8 @@
     NSDictionary *appDefaults = [NSDictionary dictionaryWithObject:[NSDate date] forKey:@"Initial Launch"];
     [defaults registerDefaults:appDefaults];
     [defaults setValue:@"1.0" forKey:@"appVersion"];
+    [defaults setValue:@"Helen Wang" forKey:@"appDev"];
+    [defaults setValue:@"icons8.com for in-app icons" forKey:@"appCred"];
     [defaults synchronize];
     NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 }

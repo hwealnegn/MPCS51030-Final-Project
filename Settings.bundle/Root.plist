@@ -7,6 +7,16 @@
 		<dict>
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Version</string>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>Key</key>
+			<string>appVersion</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
 			<key>DefaultValue</key>
 			<string></string>
 			<key>Title</key>
@@ -20,9 +30,9 @@
 			<key>DefaultValue</key>
 			<string></string>
 			<key>Title</key>
-			<string>Version</string>
+			<string>Credits</string>
 			<key>Key</key>
-			<string>appVersion</string>
+			<string>appCred</string>
 		</dict>
 	</array>
 	<key>StringsTable</key>
