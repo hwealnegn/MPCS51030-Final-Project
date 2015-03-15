@@ -36,8 +36,13 @@
              existingContact.location = newContact.location;
              NSLog(@"After: %@, %@", self.contactLocations[index], existingContact.location);
              
+             // Also need to update time
+             self.contactTimes[index] = newContact.time;
+             existingContact.time = newContact.time;
+             
              NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-             [defaults setObject:self.contactLocations forKey:@"contactLocations"]; // ????
+             [defaults setObject:self.contactLocations forKey:@"contactLocations"];
+             [defaults setObject:self.contactTimes forKey:@"contactTimes"];
              
              [self.tableView reloadData];
          } else {
