@@ -63,6 +63,8 @@
      }
 }
 
+// Segue from AddContactViewController
+// Simply returns to AllContactsTableViewController without passing data
 - (IBAction)unwindNoAdd:(UIStoryboardSegue *)segue {
     // Don't do anything
     NSLog(@"Do not add/edit contact");
