@@ -63,6 +63,11 @@
      }
 }
 
+- (IBAction)unwindNoAdd:(UIStoryboardSegue *)segue {
+    // Don't do anything
+    NSLog(@"Do not add/edit contact");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.contacts = [[NSMutableArray alloc] init];
