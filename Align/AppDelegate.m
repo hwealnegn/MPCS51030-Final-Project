@@ -26,6 +26,7 @@
     // Override point for customization after application launch.
     [self setPreferenceDefaults];
     
+    // Modify navigation bar appearance
     // Reference: http://www.raywenderlich.com/21703/user-interface-customization-in-ios-6
     [[UINavigationBar appearance] setBarTintColor:[UIColor clearColor]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
@@ -33,11 +34,12 @@
                                                           [UIColor whiteColor], NSForegroundColorAttributeName,
                                                           nil]];
     
-    // Splash screen
+    // Splash screen view
     self.splash = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.window.frame.size.width, self.window.frame.size.height)];
     self.splash.backgroundColor = [UIColor colorWithRed:1.0 green:0.5 blue:0.5 alpha:1.0];
     [self.window.rootViewController.view addSubview:self.splash];
     
+    // Label for splash screen
     CGFloat labelHeight = 50.0;
     UILabel *splashTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, (self.splash.frame.size.height-labelHeight)/2.0, self.splash.frame.size.width, labelHeight)];
     splashTitle.numberOfLines = 2;
@@ -61,6 +63,7 @@
     
     [self.splash addSubview:splashTitle];
     
+    // Splash screen animation
     // Reference for adding delay: http://stackoverflow.com/questions/15335649/adding-delay-between-execution-of-two-following-lines
     double delayInTransition = 1.0;
     dispatch_time_t switchTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInTransition * NSEC_PER_SEC));

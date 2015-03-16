@@ -22,20 +22,22 @@
 
 @implementation ViewController
 
+// Segue from AllContactsTableViewController
+// Passes back which contacts to display on ViewController
 - (IBAction)unwindToList:(UIStoryboardSegue *)segue {
     [self.selectContacts reloadData];
 }
 
-/* Display UIAlertView detailing how to use app */
+// Display UIAlertView detailing how to use app
 - (IBAction)showInstructions:(id)sender {
+    NSLog(@"Show instructions");
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Welcome to Align!" message:@"Align lets you see WHEN people in your life are relative to you.\n\nBegin by clicking the couple holding hands. Here you can view saved individuals and add new ones.\n\nSelect people to align times with by tapping them on your list. Highlighted names will show up on the main page.\n\nScroll the green field to align your time with those of your contacts." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //NSLog(@"VIEW APPEARED!!!!!!!");
-    //NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
     
     // Empty arrays
     [self.contacts removeAllObjects];
@@ -45,7 +47,7 @@
     [self.contactTimes removeAllObjects];
     [self.selectedContacts removeAllObjects];
     
-    // Use defaults to repopulate contactSelections
+    // Use defaults to repopulate arrays
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     [self.contactSelections addObjectsFromArray:[defaults objectForKey:@"contactSelections"]];
@@ -66,6 +68,7 @@
         }
     }
     
+    // Pick out which contacts have been selected to be displayed
     for (int i=0; i<[self.contacts count]; i++) {
         BOOL isSelected = [[self.contactSelections objectAtIndex:i] boolValue];
         if (isSelected) {
@@ -87,10 +90,9 @@
     
     // Initialize scroll view
     [self.bottomScroll setContentSize:CGSizeMake(1200, 90)];
-    
     [self.scrollView addSubview:self.scrollImage];
     
-    // Initialize scroll view at current time
+    // Initialize scroll view position based on current time
     NSDate *currentTime = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"HH:mm"];
@@ -103,10 +105,6 @@
     self.dynamicHour = hourNow;
     self.dynamicMinute = minuteNow;
     
-    //NSLog(@"HELLOLOLO %ld, %ld", (long)self.dynamicHour, (long)self.dynamicMinute);
-    
-    //NSLog(@"hour: %ld, minute: %ld", (long)hourNow, (long)minuteNow);
-    
     NSString *resultString = [dateFormatter stringFromDate: currentTime];
     
     NSInteger pageWidth = self.view.frame.size.width;
@@ -114,9 +112,7 @@
     CGFloat quarterPosition = maxPosition / 4.0;
     CGFloat midPosition = maxPosition / 2.0;
     CGFloat threeQuarterPosition = 0.75 * maxPosition;
-
     CGFloat initialPosition = ((hourNow * 60.0) + minuteNow) * maxPosition / 1440.0;
-    //NSLog(@"initial position: %f, maxPos: %f, increment: %f", initialPosition, maxPosition, initialPosition/maxPosition);
     
     // Set initial scroll view position
     [self.bottomScroll setContentOffset:CGPointMake(initialPosition, 0)];
@@ -129,7 +125,7 @@
     self.scrollImage.layer.shadowRadius = 1.0f;
     self.scrollImage.clipsToBounds = NO;
     
-    // Set background image
+    // Set background image of view controller
     // Reference for making navigation bar transparent: http://stackoverflow.com/questions/2315862/make-uinavigationbar-transparent
     self.selectContacts.backgroundColor = [UIColor clearColor];
     self.scrollImage.backgroundColor = [UIColor clearColor];
@@ -154,7 +150,7 @@
     [self.view addSubview:self.nightView];
     [self.view sendSubviewToBack:self.nightView];
     
-    // Set initial background
+    // Set initial background based on inital position of scroll view (i.e. to correspond with initial time)
     if (initialPosition < maxPosition/4.0) { // 0 to quarterPosition
         self.dayView.alpha = 0;
         self.sunView.alpha = initialPosition/quarterPosition;
@@ -186,10 +182,9 @@
     float timeZoneOffset = [destinationTimeZone secondsFromGMT] / 3600.0;
     NSLog(@"Time zone offset: %f", timeZoneOffset);
     
+    // Collect location names from NSTimeZone
     NSArray *timeZoneNames = [NSTimeZone knownTimeZoneNames];
     for (int i=0; i<[timeZoneNames count]; i++){
-        //NSLog(@"%@", timeZoneNames[i]);
-        
         // Get city name
         NSString *zone = timeZoneNames[i];
         NSString *city;
@@ -202,6 +197,7 @@
         
         //NSLog(@"%@", city);
         
+        // Set table view times based on corresponding locations
         for (int j=0; j<[self.contacts count]; j++) {
             NSString *contactCity = self.contactLocations[j];
             if ([contactCity isEqualToString:city]) {
@@ -209,26 +205,22 @@
                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
                 [formatter setTimeZone:contactTimeZone];
                 
-                // Attempt #2
                 float contactTZOffset = [contactTimeZone secondsFromGMT] / 3600.0;
                 NSLog(@"Time where contact is: %f", contactTZOffset-timeZoneOffset);
                 
-                float timeDifference = contactTZOffset-timeZoneOffset;
+                float timeDifference = contactTZOffset-timeZoneOffset; // difference between user's time and contact's time
                 NSString *diffAsStr = [NSString stringWithFormat:@"%f", timeDifference];
                 
                 self.contactTimes[j] = diffAsStr;
             }
         }
     }
-    
-    for (int i=0; i<[self.contacts count]; i++) {
-        NSLog(@"Contact: %@, time: %@, location: %@", self.contactNames[i], self.contactTimes[i], self.contactLocations[i]);
-    }
 }
 
 - (void)loadInitialData {
     // Load data from NSUserDefaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
     if ([defaults objectForKey:@"contactNames"] != nil) {
         [self.contactNames addObjectsFromArray:[defaults objectForKey:@"contactNames"]]; // add existing objects
     }
@@ -241,7 +233,6 @@
     if ([defaults objectForKey:@"contactTimes"] != nil) {
         [self.contactTimes addObjectsFromArray:[defaults objectForKey:@"contactTimes"]];
     }
-    
     if (self.contactNames != nil) {
         for (int i=0; i<[self.contactNames count]; i++){
             Contact *addContact = [[Contact alloc] init];
@@ -261,8 +252,6 @@
             [self.selectedContacts addObject:self.contacts[i]];
         }
     }
-    
-    //NSLog(@"Number of selected contacts: %lu", (unsigned long)[self.selectedContacts count]);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -284,22 +273,21 @@
     ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell" forIndexPath:indexPath];
     Contact *contact = [self.selectedContacts objectAtIndex:indexPath.row]; // only show selected contacts
     
-    // Configure cell here!
+    // Configure cell
     cell.contactName.text = contact.name;
     cell.contactLocation.text = contact.location;
 
     NSString *minutes;
     NSString *hours;
     
-    //float currentTimeFloat = [currentTime floatValue];
+    // Construct time to display for each contact
     float currentTimeFloat = self.dynamicHour;
     float contactTimeFloat = [contact.time floatValue];
     float timeDifference = contactTimeFloat + currentTimeFloat;
     if (timeDifference >= 24.0) {
         timeDifference = timeDifference - 24.0;
     }
-    //NSLog(@"Current time: %f, Contact time: %f", currentTimeFloat, contactTimeFloat);
-    //NSLog(@"Time difference: %f", timeDifference);
+    NSLog(@"Current time: %f, Contact time: %f", currentTimeFloat, contactTimeFloat);
     
     hours = [NSString stringWithFormat:@"%d", (int)timeDifference];
     minutes = [NSString stringWithFormat:@"%02ld", (long)self.dynamicMinute];
@@ -307,14 +295,11 @@
     NSString *diffAsStr = [NSString stringWithFormat:@"%@:%@", hours, minutes];
     cell.contactTime.text = diffAsStr;
     
-    //NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
-    
+    // Cell appearance properties
     cell.backgroundColor = [UIColor clearColor];
     cell.contactName.textColor = [UIColor whiteColor];
     cell.contactLocation.textColor = [UIColor whiteColor];
     cell.contactTime.textColor = [UIColor whiteColor];
-    NSLog(@"Is cell's minute updating? %@", minutes);
-    NSLog(@"Test dynamic time: %ld, %ld", (long)self.dynamicHour, (long)self.dynamicMinute);
     
     return cell;
 }
@@ -339,8 +324,7 @@
     // Reference to keep leading zero: http://stackoverflow.com/questions/10790925/xcode-iphone-sdk-keep-nsinteger-zero-at-beginning
     self.yourTime.text = [NSString stringWithFormat:@"%ld:%02ld", (long)hour, (long)minute];
     
-    //NSLog(@"Position: %f, increment: %f, pagewidth: %ld, maxpos; %f, hour: %ld, minute: %ld", position, increment, (long)pageWidth, maxPosition, (long)hour, (long)minute);
-    
+    // Adjust background image alphas based on position of scroll view
     if (position < maxPosition/4.0) { // 0 to quarterPosition
         self.dayView.alpha = 0;
         self.sunView.alpha = position/quarterPosition;
@@ -359,20 +343,21 @@
         self.nightView.alpha = (position - threeQuarterPosition)/(maxPosition-threeQuarterPosition);
     }
     
-    //NSLog(@"Day: %f, Sun: %f, Night: %f", self.dayView.alpha, self.sunView.alpha, self.nightView.alpha);
-    
+    // Update hour and minute variables based on position of scroll view
+    // Used to update times in yourTime label and in table view for each contact
     self.dynamicHour = hour;
     self.dynamicMinute = minute;
-    //NSLog(@"Your time text based on scroll view: %@", self.yourTime.text);
-    //NSLog(@"**HOUR: %ld, MINUTE: %ld", self.dynamicHour, self.dynamicMinute);
     
     [self.selectContacts reloadData];
 }
 
+// Segue to AllContactsTableViewController
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([segue.identifier isEqualToString:@"toAllContactsSegue"]){
         UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
         AllContactsTableViewController *controller = (AllContactsTableViewController *)navController.topViewController;
+        
+        // Send alpha values so that appropriate background appears
         controller.dayAlpha = self.dayView.alpha;
         controller.sunAlpha = self.sunView.alpha;
         controller.nightAlpha = self.nightView.alpha;
