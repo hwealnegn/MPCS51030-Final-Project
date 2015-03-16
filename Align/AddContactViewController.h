@@ -19,17 +19,20 @@
 @property (strong, nonatomic) NSMutableArray *contactSelections;
 @property (strong, nonatomic) NSMutableArray *contactTimeDifferences;
 
+// All cities listed in NSTimeZone
 @property (strong, nonatomic) NSMutableArray *cityNames;
 
+// Background images
 @property (strong, nonatomic) IBOutlet UIImageView *dayView;
 @property (strong, nonatomic) IBOutlet UIImageView *sunView;
 @property (strong, nonatomic) IBOutlet UIImageView *nightView;
 
+// Store alpha values for background images
 @property CGFloat dayAlpha;
 @property CGFloat sunAlpha;
 @property CGFloat nightAlpha;
 
+// Action linked to button press of checkmark (add contact)
 - (IBAction)addContactCheckpoint:(id)sender;
-
 
 @end

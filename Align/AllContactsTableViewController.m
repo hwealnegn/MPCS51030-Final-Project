@@ -22,24 +22,26 @@
 
 @implementation AllContactsTableViewController
 
+// Segue from AddContactViewController
+// Receives information about new/edited contact
 - (IBAction)unwindToContacts:(UIStoryboardSegue *)segue {
     AddContactViewController *source = [segue sourceViewController];
     Contact *newContact = source.contact;
      if (newContact != nil) {
          if ([self.contactNames containsObject:newContact.name]) {
-             NSLog(@"HEY CONTACT EXISTS ALREADY");
+             NSLog(@"Update contact location");
+             
              // Overwrite location
              NSInteger index = [self.contactNames indexOfObject:newContact.name];
              Contact *existingContact = self.contacts[index];
-             NSLog(@"Before: %@, %@", self.contactLocations[index], existingContact.location);
              self.contactLocations[index] = newContact.location;
              existingContact.location = newContact.location;
-             NSLog(@"After: %@, %@", self.contactLocations[index], existingContact.location);
              
              // Also need to update time
              self.contactTimes[index] = newContact.time;
              existingContact.time = newContact.time;
              
+             // Update defaults
              NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
              [defaults setObject:self.contactLocations forKey:@"contactLocations"];
              [defaults setObject:self.contactTimes forKey:@"contactTimes"];
@@ -48,6 +50,8 @@
              [self.tableView reloadData];
          } else {
              NSLog(@"Welcome newcomer!");
+             
+             // Add new contact's information to arrays
              [self.contacts addObject:newContact];
              [self.contactNames addObject:newContact.name];
              [self.contactLocations addObject:newContact.location];
@@ -57,9 +61,6 @@
              [self.tableView reloadData];
          }
      }
-}
-
-- (IBAction)addContact:(id)sender {
 }
 
 - (void)viewDidLoad {
@@ -72,8 +73,7 @@
 
     [self loadInitialData];
     
-    NSLog(@"Size of contactNames: %lu, contacts: %lu, contactSelections: %lu", (unsigned long)[self.contactNames count], (unsigned long)[self.contacts count], (unsigned long)[self.contactSelections count]);
-    
+    // Set up background and navigation bar appearance
     // Reference for making navigation bar transparent: http://stackoverflow.com/questions/2315862/make-uinavigationbar-transparent
     self.view.backgroundColor = [UIColor clearColor];
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -83,7 +83,6 @@
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
     self.navigationController.navigationBar.translucent = YES;
-    
     
     UIView *tmpView = [[UIView alloc] init];
     
@@ -138,7 +137,7 @@
             [self.contacts addObject:addContact];
         }
     }
-    NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+    //NSLog(@"NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -156,21 +155,18 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     return [self.contacts count];
-    //return [self.contactNames count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell" forIndexPath:indexPath];
     Contact *contact = [self.contacts objectAtIndex:indexPath.row];
     
-    // Configure cell here!
+    // Configure cell
     cell.contactName.text = contact.name;
     cell.contactLocation.text = contact.location;
     
     cell.contactName.textColor = [UIColor whiteColor];
     cell.contactLocation.textColor = [UIColor whiteColor];
-    
-    NSLog(@"Cell configured: %@ %@ %@", contact.name, contact.time, contact.location);
     
     if (contact.selected) {
         cell.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
@@ -195,9 +191,6 @@
         
         NSNumber *boolean = [NSNumber numberWithBool:tmpBool];
         self.contactSelections[i] = boolean;
-        
-        BOOL test = [[self.contactSelections objectAtIndex:i] boolValue];
-        NSLog(@"Toggled? %d: %d, %d", i, tmpBool, test);
     }
     
     // Update defaults
@@ -208,22 +201,12 @@
     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-
-// Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
-        // Remove objects from all arrays
+        // Remove objects from all arrays and update defaults
         [self.contacts removeObjectAtIndex:indexPath.row];
         
         [self.contactNames removeObjectAtIndex:indexPath.row];
@@ -246,22 +229,6 @@
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 
 #pragma mark - Navigation
 

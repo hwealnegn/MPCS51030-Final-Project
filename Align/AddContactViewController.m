@@ -21,14 +21,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
     self.contactNames = [[NSMutableArray alloc] init];
     self.contactLocations = [[NSMutableArray alloc] init];
     self.contactTimeDifferences = [[NSMutableArray alloc] init];
     self.contactSelections = [[NSMutableArray alloc] init];
     
     // Reference for making navigation bar transparent: http://stackoverflow.com/questions/2315862/make-uinavigationbar-transparent
-    //self.view.backgroundColor = [UIColor clearColor];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
                                                   forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
@@ -50,11 +49,12 @@
     [self.view addSubview:self.nightView];
     [self.view sendSubviewToBack:self.nightView];
     
+    // Set alpha values of background images
     self.dayView.alpha = self.dayAlpha;
     self.sunView.alpha = self.sunAlpha;
     self.nightView.alpha = self.nightAlpha;
     
-    // Populate cities array (get just city names from NSTimeZones)
+    // Populate cities array (get city names from NSTimeZone)
     NSArray *timeZoneNames = [NSTimeZone knownTimeZoneNames];
     self.cityNames = [[NSMutableArray alloc] init];
     for (int i=0; i<[timeZoneNames count]; i++){
@@ -169,21 +169,22 @@
             }
             
         } else {
-            NSLog(@"Initialize name array in NSUserDefaults");
-            //NSLog(@"Name: %@", self.contact.name);
-            [self.contactNames addObject:self.contact.name]; // add contact to array
+            NSLog(@"Initialize contacts arrays in NSUserDefaults");
+            
+            // Add contact info to arrays
+            [self.contactNames addObject:self.contact.name];
             [self.contactLocations addObject:self.contact.location];
             [self.contactTimeDifferences addObject:self.contact.time];
             NSNumber *boolean = [NSNumber numberWithBool:self.contact.selected];
             [self.contactSelections addObject:boolean];
             
-            //NSLog(@"size: %lu", (unsigned long)[self.contactNames count]);
-            
-            [defaults setObject:self.contactNames forKey:@"contactNames"]; // save array in defaults
+            // Save arrays to defaults
+            [defaults setObject:self.contactNames forKey:@"contactNames"];
             [defaults setObject:self.contactLocations forKey:@"contactLocations"];
             [defaults setObject:self.contactTimeDifferences forKey:@"contactTimes"];
             [defaults setObject:self.contactSelections forKey:@"contactSelections"];
             
+            // Go back to AllContactsTableViewController
             [self performSegueWithIdentifier:@"unwindToContacts" sender:self];
         }
         
@@ -216,7 +217,6 @@
         if (sender != self.saveButton) return;
         
         // First determine if location is valid
-        
         NSString *contactCity = [self.locationField.text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
         
         if ([self.cityNames containsObject:contactCity]) {

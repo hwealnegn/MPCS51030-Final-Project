@@ -10,17 +10,20 @@
 
 @interface AllContactsTableViewController : UITableViewController
 
-- (IBAction)unwindToContacts:(UIStoryboardSegue *)segue;
+- (IBAction)unwindToContacts:(UIStoryboardSegue *)segue; // segue from AddContactViewController
 
+// Store information of all contacts
 @property (strong, nonatomic) NSMutableArray *contactNames;
 @property (strong, nonatomic) NSMutableArray *contactLocations;
 @property (strong, nonatomic) NSMutableArray *contactSelections;
 @property (strong, nonatomic) NSMutableArray *contactTimes;
 
+// Background images
 @property (strong, nonatomic) IBOutlet UIImageView *dayView;
 @property (strong, nonatomic) IBOutlet UIImageView *sunView;
 @property (strong, nonatomic) IBOutlet UIImageView *nightView;
 
+// Store alpha values for background images
 @property CGFloat dayAlpha;
 @property CGFloat sunAlpha;
 @property CGFloat nightAlpha;

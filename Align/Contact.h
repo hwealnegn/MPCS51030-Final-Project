@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+// Object that groups together information for each contact
 @interface Contact : NSObject
 
 @property NSString *name;

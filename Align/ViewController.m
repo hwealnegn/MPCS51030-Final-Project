@@ -287,7 +287,6 @@
     if (timeDifference >= 24.0) {
         timeDifference = timeDifference - 24.0;
     }
-    NSLog(@"Current time: %f, Contact time: %f", currentTimeFloat, contactTimeFloat);
     
     hours = [NSString stringWithFormat:@"%d", (int)timeDifference];
     minutes = [NSString stringWithFormat:@"%02ld", (long)self.dynamicMinute];
@@ -347,6 +346,8 @@
     // Used to update times in yourTime label and in table view for each contact
     self.dynamicHour = hour;
     self.dynamicMinute = minute;
+    
+    NSLog(@"Time: %ld:%02ld", (long)self.dynamicHour, (long)self.dynamicMinute);
     
     [self.selectContacts reloadData];
 }

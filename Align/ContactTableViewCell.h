@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+// Custom table view cell for table views
 @interface ContactTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *contactName;

@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *bottomScroll;
 @property (weak, nonatomic) IBOutlet UIImageView *scrollImage;
 
+// Background images
 @property (strong, nonatomic) IBOutlet UIImageView *dayView;
 @property (strong, nonatomic) IBOutlet UIImageView *sunView;
 @property (strong, nonatomic) IBOutlet UIImageView *nightView;
