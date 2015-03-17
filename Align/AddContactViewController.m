@@ -80,6 +80,8 @@
 
 // Method called when keyboard is shown; used to resolve issue of keyboard obscuring text fields
 // Entire view is shifted a set increment if the text fields are obscured
+// References: http://stackoverflow.com/questions/7952762/xcode-ios5-move-uiview-up-when-keyboard-appears
+// & https://developer.apple.com/library/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/KeyboardManagement/KeyboardManagement.html
 - (void)keyboardWasShown:(NSNotification *)notification {
     NSLog(@"Keyboard shown!");
     
