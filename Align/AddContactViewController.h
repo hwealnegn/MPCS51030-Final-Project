@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Contact.h"
 
-@interface AddContactViewController : UIViewController
+@interface AddContactViewController : UIViewController <UITextFieldDelegate>
 
 @property Contact *contact;
 
