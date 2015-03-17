@@ -275,7 +275,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o1t-C8-1T0">
-                                <rect key="frame" x="16" y="264" width="568" height="30"/>
+                                <rect key="frame" x="16" y="214" width="568" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -284,7 +284,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hdn-BD-eh5">
-                                <rect key="frame" x="16" y="302" width="568" height="30"/>
+                                <rect key="frame" x="16" y="252" width="568" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -301,7 +301,7 @@
                             <constraint firstItem="hdn-BD-eh5" firstAttribute="trailing" secondItem="845-UM-7bq" secondAttribute="trailingMargin" id="Irc-3B-Kbs"/>
                             <constraint firstItem="o1t-C8-1T0" firstAttribute="top" secondItem="8EW-9o-6gM" secondAttribute="bottom" constant="200" id="NMP-rc-oTZ"/>
                             <constraint firstAttribute="centerY" secondItem="o1t-C8-1T0" secondAttribute="centerY" id="NZf-ze-LJL"/>
-                            <constraint firstItem="o1t-C8-1T0" firstAttribute="top" secondItem="8EW-9o-6gM" secondAttribute="bottom" constant="200" id="aHW-IF-8cK"/>
+                            <constraint firstItem="o1t-C8-1T0" firstAttribute="top" secondItem="8EW-9o-6gM" secondAttribute="bottom" constant="150" id="aHW-IF-8cK"/>
                             <constraint firstItem="o1t-C8-1T0" firstAttribute="leading" secondItem="845-UM-7bq" secondAttribute="leadingMargin" id="kW0-kH-h5z"/>
                             <constraint firstItem="hdn-BD-eh5" firstAttribute="top" secondItem="o1t-C8-1T0" secondAttribute="bottom" constant="6" id="oTA-Ml-keU"/>
                             <constraint firstItem="ALb-bn-CN9" firstAttribute="top" secondItem="hdn-BD-eh5" secondAttribute="bottom" constant="270" id="pXI-Ek-Tbs"/>
