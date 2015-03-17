@@ -69,13 +69,49 @@
         }
         [self.cityNames addObject:city];
     }
+    
+    // Save original value of view center
+    self.originalCenter = self.view.center;
+    self.viewShifted = false;
+    
+    // Send notification when keyboard is displayed
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
+}
+
+// Method called when keyboard is shown; used to resolve issue of keyboard obscuring text fields
+// Entire view is shifted a set increment if the text fields are obscured
+- (void)keyboardWasShown:(NSNotification *)notification {
+    NSLog(@"Keyboard shown!");
+    
+    NSDictionary *info = [notification userInfo];
+    CGFloat kbHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+
+    // If keyboard covers location (bottom) text field, shift the text fields up
+    if ((self.view.frame.size.height - self.locationField.frame.origin.y) <= (self.view.frame.size.height - kbHeight)) {
+        NSLog(@"Text field obscured");
+        self.view.center = CGPointMake(self.originalCenter.x, self.originalCenter.y - 50); // shift up by keyboard height
+        self.viewShifted = true;
+    } else {
+        NSLog(@"Text field not obscured");
+    }
+    NSLog(@"Keyboard height: %f, text field origin: %f", self.view.frame.size.height - kbHeight, self.view.frame.size.height - self.locationField.frame.origin.y);
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == self.nameField | textField == self.locationField) {
         [textField resignFirstResponder];
     }
+    
+    // If view was shifted to accommodate keyboard, restore original view
+    if (self.viewShifted) {
+        self.view.center = self.originalCenter;
+        self.viewShifted = false;
+    }
     return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    
 }
 
 - (void)didReceiveMemoryWarning {

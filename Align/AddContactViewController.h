@@ -13,6 +13,12 @@
 
 @property Contact *contact;
 
+// Variable to store center of view
+@property CGPoint originalCenter;
+
+// Boolean to detect if view was shifted
+@property BOOL viewShifted;
+
 // Store information of all contacts
 @property (strong, nonatomic) NSMutableArray *contactNames;
 @property (strong, nonatomic) NSMutableArray *contactLocations;
