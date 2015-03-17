@@ -104,7 +104,10 @@
     
     // If view was shifted to accommodate keyboard, restore original view
     if (self.viewShifted) {
-        self.view.center = self.originalCenter;
+        [UIView animateWithDuration:0.25 animations:^{
+            self.view.center = self.originalCenter;
+        }];
+        
         self.viewShifted = false;
     }
     return YES;
